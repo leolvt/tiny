@@ -1,0 +1,60 @@
+<programa> ::= <lista_comandos> "endp"
+
+<lista_comandos> ::= <comando> ";"
+<lista_comandos> ::= <comando> ";" <lista_comandos>
+
+<comando> ::= "writeStr" "(" <string> ")"
+<comando> ::= "writeVar" "(" <variavel> ")"
+<comando> ::= "writeln"
+<comando> ::= "read" "(" <variavel> ")"
+<comando> ::= <variavel> ":=" <expressao>
+<comando> ::= "for" <variavel> ":=" <expressao> "to" <expressao> "do"
+				  <lista_comandos>
+			  "end"	
+<comando> ::= "while" <expressao> "do"
+			      <lista_comandos>
+			  "end"
+<comando> ::= "if" <expressao> "then" <lista_comandos> "end"
+<comando> ::= "if" <expressao> "then" <lista_comandos> "else"
+			      <lista_comandos> "end"
+
+<expressao> ::=  <exp_rel> and <expressao>
+<expressao> ::=  <exp_rel> or <expressao>
+
+<exp_rel> ::= <exp_add> "<" <exp_rel>
+<exp_rel> ::= <exp_add> ">" <exp_rel>
+<exp_rel> ::= <exp_add> "<=" <exp_rel>
+<exp_rel> ::= <exp_add> "<=" <exp_rel>
+<exp_rel> ::= <exp_add> "<>" <exp_rel>
+<exp_rel> ::= <exp_add> "=" <exp_rel>
+
+<exp_add> ::= <exp_mul> + <exp_add>
+<exp_add> ::= <exp_mul> - <exp_add>
+
+<exp_mul> ::= <fator> * <exp_mul>
+<exp_mul> ::= <fator> / <exp_mul>
+
+<fator> ::= "(" <expressao> ")"
+<fator> ::= "sqrt" "(" <expressao> ")"
+<fator> ::= <num>
+
+<num> ::= [0-9]+
+
+<variavel> ::= [a-z] | [A-Z]
+
+<string> ::= "'" ([a-z]|[A-Z]|[0-9]|etc)* "'"
+
+================================================================================
+
+(1+a/3*4+2 >= 5-3*a+4/2) or (blablabla)
+((1+((a/3)*4))+2) >= ((5-(3*a))+(4/2)) 
+(((1 + 2) - 3) + 4) = 4
+
+Precedencia Operadores:
+
+1) *  /
+2) +  -
+3) >  <  >=  <=  <> =
+4) and  or 
+
+================================================================================
