@@ -17,7 +17,8 @@ BINNAME = bin/tiny
 PARAM = 
 
 OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
-	   ${OBJDIR}/driver.o ${OBJDIR}/addition.o ${OBJDIR}/number.o
+	   ${OBJDIR}/driver.o ${OBJDIR}/addition.o ${OBJDIR}/number.o \
+	   ${OBJDIR}/contexto.o
 
 ARCHIVE_FILES = src/ bin/ Makefile README
 ARCHIVE_NAME = tiny.tar.gz
@@ -56,6 +57,10 @@ ${BINNAME}: ${OBJS}
 	
 ${OBJDIR}/main.o: src/main.cpp
 	@echo "Compilando Modulo Principal"
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+
+${OBJDIR}/contexto.o: src/contexto.cpp src/contexto.h
+	@echo "Compilando Modulo Contexto"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/addition.o: src/addition.cpp src/addition.h
