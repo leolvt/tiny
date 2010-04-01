@@ -17,8 +17,8 @@ BINNAME = bin/tiny
 PARAM = 
 
 OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
-	   ${OBJDIR}/driver.o ${OBJDIR}/addition.o ${OBJDIR}/number.o \
-	   ${OBJDIR}/contexto.o
+	   ${OBJDIR}/driver.o ${OBJDIR}/contexto.o ${OBJDIR}/exp_aritmetica.o \
+	   ${OBJDIR}/fator.o
 
 ARCHIVE_FILES = src/ bin/ Makefile README
 ARCHIVE_NAME = tiny.tar.gz
@@ -49,6 +49,12 @@ run: all
 	@./${BINNAME} ${PARAM}
 	@echo "======================"
 
+valgrind: all
+	@echo "Executando Valgrind: "
+	@echo "======================"
+	@valgrind ./${BINNAME} ${PARAM}
+	@echo "======================"
+
 # =============
 
 ${BINNAME}: ${OBJS}
@@ -63,12 +69,12 @@ ${OBJDIR}/contexto.o: src/contexto.cpp src/contexto.h
 	@echo "Compilando Modulo Contexto"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
-${OBJDIR}/addition.o: src/addition.cpp src/addition.h
-	@echo "Compilando Modulo Addition"
+${OBJDIR}/fator.o: src/fator.cpp src/fator.h
+	@echo "Compilando Modulo Fator" 
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
-${OBJDIR}/number.o: src/number.cpp src/number.h
-	@echo "Compilando Modulo Number"
+${OBJDIR}/exp_aritmetica.o: src/exp_aritmetica.cpp src/exp_aritmetica.h
+	@echo "Compilando Modulo Expressao Aritmetica" 
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/driver.o: src/driver.cpp src/driver.h 

@@ -55,11 +55,6 @@ typedef tiny::Parser::token_type token_type;
 
  /*** BEGIN RULES ***/
 
-[0-9]+ {
-    yylval->integerVal = atoi(yytext);
-    return token::INTEGER;
-}
-
 ([0-9]+"."[0-9]*)|("."[0-9]*) {
     yylval->doubleVal = atof(yytext);
     return token::DOUBLE;

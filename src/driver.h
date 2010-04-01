@@ -68,8 +68,6 @@ public:
      * parser to the scanner. It is used in the yylex macro. */
     class Scanner* lexer;
 
-    /** Reference to the calculator context filled during parsing of the
-     * expressions. */
 };
 
 } // namespace tiny

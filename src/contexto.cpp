@@ -36,7 +36,8 @@ double Contexto::obtemVariavel(char nomeVar )
 	}
 	else
 	{
-		std::cerr << "Variavel Inválida" << std::endl;
+		std::cerr << "Variavel a ser Obtida é Inválida: " << nomeVar 
+			<< std::endl;
 		return 0.0;
 	}
 }
@@ -53,7 +54,8 @@ void Contexto::defineVariavel(char nomeVar, double valor)
 	}
 	else
 	{
-		std::cerr << "Variavel Inválida" << std::endl;
+		std::cerr << "Variavel a ser definida é Inválida: " << nomeVar 
+			<< std::endl;
 	}
 }
 

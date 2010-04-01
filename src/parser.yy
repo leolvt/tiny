@@ -51,12 +51,10 @@
 %union {
     int  			integerVal;
     double 			doubleVal;
-    std::string*		stringVal;
 }
 
 %token				END	     0	"end of file"
 %token				EOL			"end of line"
-%token <integerVal> INTEGER		"integer"
 %token <doubleVal> 	DOUBLE		"double"
 
 %type <doubleVal>	exp

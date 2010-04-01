@@ -18,8 +18,10 @@
 <comando> ::= "if" <exp_booleana> "then" <lista_comandos> "else"
 			      <lista_comandos> "end"
 
-<exp_booleana> ::= <exp_booleana> or <exp_and>
-<exp_booleana> ::= <exp_and>
+<exp_booleana> ::= <exp_or>
+
+<exp_or> ::= <exp_or> or <exp_and>
+<exp_or> ::= <exp_and>
 
 <exp_and> ::=  <exp_and> and <exp_rel>
 <exp_and> ::=  <exp_rel>
@@ -31,21 +33,23 @@
 <exp_rel> ::= <exp_aritmetica> "<>" <exp_aritmetica>
 <exp_rel> ::= <exp_aritmetica> "=" <exp_aritmetica>
 
-<exp_aritmetica> ::= <exp_aritmetica> + <exp_mul>
-<exp_aritmetica> ::= <exp_aritmetica> - <exp_mul> 
-<exp_aritmetica> ::= <exp_mul>
+# <exp_aritmetica> ::= <exp_soma>
 
-<exp_mul> ::= <exp_mul> * <fator>
-<exp_mul> ::= <exp_mul> / <fator>
-<exp_mul> ::= <fator>
+# <exp_soma> ::= <exp_soma> + <exp_mul>
+# <exp_soma> ::= <exp_soma> - <exp_mul> 
+# <exp_soma> ::= <exp_mul>
 
-<fator> ::= "(" <exp_aritmetica> ")"
-<fator> ::= "sqrt" "(" <exp_aritmetica> ")"
-<fator> ::= <num>
-<fator> ::= <variavel>
+# <exp_mul> ::= <exp_mul> * <fator>
+# <exp_mul> ::= <exp_mul> / <fator>
+# <exp_mul> ::= <fator>
 
-<num> ::= ([0-9]+"."[0-9]*)|("."[0-9]+)
-<variavel> ::= [a-zA-z]
+# <fator> ::= "(" <exp_aritmetica> ")"
+# <fator> ::= "sqrt" "(" <exp_aritmetica> ")"
+# <fator> ::= <num>
+# <fator> ::= <variavel>
+
+# <num> ::= ([0-9]+"."[0-9]*)|("."[0-9]+)
+# <variavel> ::= [a-zA-z]
 
 <string> ::= "\"" .* "\""
 
