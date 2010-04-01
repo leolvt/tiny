@@ -1,6 +1,6 @@
 %{ /*** C/C++ Declarations ***/
 
-#include <string>
+#include <iostream>
 
 #include "scanner.h"
 
@@ -55,11 +55,23 @@ typedef tiny::Parser::token_type token_type;
 
  /*** BEGIN RULES ***/
 
+ /* Floating Point Number */
 ([0-9]+"."[0-9]*)|("."[0-9]*) {
     yylval->doubleVal = atof(yytext);
     return token::DOUBLE;
 }
 
+sqrt	{
+	return token::SQRT;
+}
+
+ /* Variables */
+[A-Za-z] {
+	yylval->charVal = yytext[0];
+	return token::VARNAME;
+}
+
+ /* gobble up empty spaces */
 [ \t\r]+ {
     yylloc->step();
 }
@@ -67,7 +79,7 @@ typedef tiny::Parser::token_type token_type;
  /* gobble up end-of-lines */
 \n {
     yylloc->lines(yyleng); yylloc->step();
-    return token::EOL;
+/*    return token::EOL; */
 }
 
  /* pass all other characters up to bison */

@@ -33,11 +33,9 @@
 <exp_rel> ::= <exp_aritmetica> "<>" <exp_aritmetica>
 <exp_rel> ::= <exp_aritmetica> "=" <exp_aritmetica>
 
-# <exp_aritmetica> ::= <exp_soma>
-
-# <exp_soma> ::= <exp_soma> + <exp_mul>
-# <exp_soma> ::= <exp_soma> - <exp_mul> 
-# <exp_soma> ::= <exp_mul>
+# <exp_aritmetica> ::= <exp_aritmetica> + <exp_mul>
+# <exp_aritmetica> ::= <exp_aritmetica> - <exp_mul> 
+# <exp_aritmetica> ::= <exp_mul>
 
 # <exp_mul> ::= <exp_mul> * <fator>
 # <exp_mul> ::= <exp_mul> / <fator>

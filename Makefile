@@ -41,7 +41,7 @@ clean:
 	@rm -fr ${OBJDIR}/*
 	@rm -fr ${BINNAME}
 	@rm -fr src/scanner.cpp src/parser.h src/parser.cpp
-	@rm -rf src/*.hh
+	@rm -rf src/*.hh tags
 
 run: all
 	@echo "Executando: "

@@ -16,6 +16,13 @@ Driver::Driver()
 
 /* ========================================================================== */
 
+Driver::~Driver()
+{
+	if (this->resultado) delete this->resultado;
+}
+
+/* ========================================================================== */
+
 bool Driver::parse_stream(std::istream& in, const std::string& sname)
 {
     streamname = sname;

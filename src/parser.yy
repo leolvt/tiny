@@ -1,8 +1,8 @@
 %{ /*** C/C++ Declarations ***/
 
-#include <stdio.h>
-#include <string>
-#include <vector>
+#include "expressao.h"
+#include "fator.h"
+#include "exp_aritmetica.h"
 
 %}
 
@@ -14,9 +14,6 @@
 /* add debug output code to generated parser. disable this for release
  * versions. */
 %debug
-
-/* start symbol is named "start" */
-%start start
 
 /* write out a header file containing the token defines */
 %defines
@@ -49,17 +46,24 @@
  /*** BEGIN TOKENS ***/
 
 %union {
-    int  			integerVal;
-    double 			doubleVal;
+    char				charVal;
+    double				doubleVal;
+	class Expressao *	expVal;
 }
 
-%token				END	     0	"end of file"
-%token				EOL			"end of line"
-%token <doubleVal> 	DOUBLE		"double"
+%token					END	     0	"end of file"
+%token					SQRT		"square root"
+%token	<doubleVal> 	DOUBLE		"double"
+%token	<charVal>		VARNAME		"var name"
 
-%type <doubleVal>	exp
+%type	<expVal>		exp_arit
+%type	<expVal>		exp_mul
+%type	<expVal>		fator
 
 %left '+'
+
+/* start symbol is named "start" */
+%start program
 
  /*** END TOKENS ***/
 
@@ -78,18 +82,27 @@
 
 %% /*** Grammar Rules ***/
 
+program: exp_arit				{ driver.resultado = $1; }
 
-start: END
-	 | line start
-;
 
-line: EOL
-	| exp EOL { std::cout << "> " << $1 << std::endl; }
-	| exp END { std::cout << "> " << $1 << std::endl; }
-;
 
-exp: DOUBLE		{ $$ = $1; }
-   | exp '+' exp { $$ = $1 + $3; }
+
+exp_arit: exp_arit '+' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, Adicao);}
+		| exp_arit '-' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, 
+											Subtracao); 
+								}
+		| exp_mul				{ $$ = $1; }
+
+exp_mul: exp_mul '*' fator	{ $$ = new ExpressaoAritmetica($1, $3, 
+											Multiplicacao); 
+							}
+	   | exp_mul '/' fator	{ $$ = new ExpressaoAritmetica($1, $3, Divisao); }
+	   | fator				{ $$ = $1; }
+
+fator: DOUBLE				{ $$ = new Fator(Numero, $1); }
+	 | VARNAME				{ $$ = new Fator(Variavel, 0.0, NULL, $1); }
+	 | '(' exp_arit ')'			{ $$ = new Fator(Parentesis, 0.0, $2); }
+	 | SQRT '(' exp_arit ')'	{ $$ = new Fator(RaizQuadrada, 0.0, $3);}
 ;
 
 %% /*** Additional Code ***/

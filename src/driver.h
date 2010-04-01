@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "expressao.h"
+
 /** The tiny namespace is used to encapsulate the three parser classes
  * tiny::Parser, tiny::Scanner and tiny::Driver */
 namespace tiny {
@@ -20,6 +22,9 @@ public:
     /// construct a new parser driver context
     Driver();
 
+	/// destruct a parser 
+	~Driver();
+
     /// enable debug output in the flex scanner
     bool trace_scanning;
 
@@ -28,6 +33,9 @@ public:
 
     /// stream name (file or input stream) used for error messages.
     std::string streamname;
+
+	// Store the parsing result
+	Expressao * resultado;
 
     /** Invoke the scanner and parser for a stream.
      * @param in	input stream
