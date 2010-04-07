@@ -23,8 +23,11 @@
 <exp_or> ::= <exp_or> or <exp_and>
 <exp_or> ::= <exp_and>
 
-<exp_and> ::=  <exp_and> and <exp_rel>
-<exp_and> ::=  <exp_rel>
+<exp_and> ::=  <exp_and> and <exp_not>
+<exp_and> ::=  <exp_not>
+
+<exp_not> ::= not <exp_rel>
+<exp_not> ::= <exp_rel>
 
 <exp_rel> ::= <exp_aritmetica> "<" <exp_aritmetica>
 <exp_rel> ::= <exp_aritmetica> ">" <exp_aritmetica>
@@ -32,6 +35,7 @@
 <exp_rel> ::= <exp_aritmetica> "<=" <exp_aritmetica>
 <exp_rel> ::= <exp_aritmetica> "<>" <exp_aritmetica>
 <exp_rel> ::= <exp_aritmetica> "=" <exp_aritmetica>
+<exp_rel> ::= "(" <exp_booleana> ")"
 
 # <exp_aritmetica> ::= <exp_aritmetica> + <exp_mul>
 # <exp_aritmetica> ::= <exp_aritmetica> - <exp_mul> 
@@ -61,5 +65,6 @@ Precedencia Operadores:
 3) >  <  >=  <=  <> =
 4) and    (Assoc. Esq)
 5) or     (Assoc. Esq)
+6) not
 
 ================================================================================
