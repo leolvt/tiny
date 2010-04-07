@@ -1,7 +1,7 @@
 %{ /*** C/C++ Declarations ***/
 
 #include <iostream>
-
+#include <string>
 #include "scanner.h"
 
 /* import the parser's token type into a local typedef */
@@ -45,6 +45,11 @@ typedef tiny::Parser::token_type token_type;
 #define YY_USER_ACTION  yylloc->columns(yyleng);
 %}
 
+D	[0-9]
+L	[a-zA-Z_]
+H	[a-fA-F0-9]
+E	[Ee][+-]?{D}+
+
 %% /*** Regular Expressions Part ***/
 
  /* code to place at the beginning of yylex() */
@@ -55,24 +60,32 @@ typedef tiny::Parser::token_type token_type;
 
  /*** BEGIN RULES ***/
 
+ /* reserved words */
+"sqrt"	{ return token::SQRT; }
+"or" { return token::OR; }
+"and" { return token::AND; }
+"not" { return token::NOT; }
+
  /* Floating Point Number */
-([0-9]+"."[0-9]*)|("."[0-9]*) {
+(({D}+"."{D}*)|("."{D}+)){E}? {
     yylval->doubleVal = atof(yytext);
     return token::DOUBLE;
 }
 
-sqrt	{
-	return token::SQRT;
+ /* string literal */
+"\""([^"\""])*"\"" {
+	yylval->strVal = new std::string(yytext);
+	return token::STRING;
 }
 
  /* Variables */
-[A-Za-z] {
+{L} {
 	yylval->charVal = yytext[0];
 	return token::VARNAME;
 }
 
  /* gobble up empty spaces */
-[ \t\r]+ {
+[ \t\v\f\r]+ {
     yylloc->step();
 }
 

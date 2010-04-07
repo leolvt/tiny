@@ -1,5 +1,7 @@
 %{ /*** C/C++ Declarations ***/
 
+#include <iostream>
+#include <string>
 #include "expressao.h"
 #include "fator.h"
 #include "exp_aritmetica.h"
@@ -49,12 +51,17 @@
     char				charVal;
     double				doubleVal;
 	class Expressao *	expVal;
+	std::string		*	strVal;
 }
 
 %token					END	     0	"end of file"
 %token					SQRT		"square root"
+%token					OR			"or operator"
+%token					AND			"and operator"
+%token					NOT			"not operator"
 %token	<doubleVal> 	DOUBLE		"double"
-%token	<charVal>		VARNAME		"var name"
+%token	<strVal>		STRING		"string"
+%token	<charVal>		VARNAME		"variable name"
 
 %type	<expVal>		exp_arit
 %type	<expVal>		exp_mul
@@ -83,21 +90,23 @@
 %% /*** Grammar Rules ***/
 
 program: exp_arit				{ driver.resultado = $1; }
-
-
-
+	   | STRING					{ std::cout << *$1 << std::endl; 
+									exit(0); }
+;
 
 exp_arit: exp_arit '+' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, Adicao);}
 		| exp_arit '-' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, 
 											Subtracao); 
 								}
 		| exp_mul				{ $$ = $1; }
+;
 
 exp_mul: exp_mul '*' fator	{ $$ = new ExpressaoAritmetica($1, $3, 
 											Multiplicacao); 
 							}
 	   | exp_mul '/' fator	{ $$ = new ExpressaoAritmetica($1, $3, Divisao); }
 	   | fator				{ $$ = $1; }
+;
 
 fator: DOUBLE				{ $$ = new Fator(Numero, $1); }
 	 | VARNAME				{ $$ = new Fator(Variavel, 0.0, NULL, $1); }

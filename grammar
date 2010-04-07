@@ -37,12 +37,12 @@
 <exp_rel> ::= <exp_aritmetica> "=" <exp_aritmetica>
 <exp_rel> ::= "(" <exp_booleana> ")"
 
-# <exp_aritmetica> ::= <exp_aritmetica> + <exp_mul>
-# <exp_aritmetica> ::= <exp_aritmetica> - <exp_mul> 
+# <exp_aritmetica> ::= <exp_aritmetica> "+" <exp_mul>
+# <exp_aritmetica> ::= <exp_aritmetica> "-" <exp_mul> 
 # <exp_aritmetica> ::= <exp_mul>
 
-# <exp_mul> ::= <exp_mul> * <fator>
-# <exp_mul> ::= <exp_mul> / <fator>
+# <exp_mul> ::= <exp_mul> "*" <fator>
+# <exp_mul> ::= <exp_mul> "/" <fator>
 # <exp_mul> ::= <fator>
 
 # <fator> ::= "(" <exp_aritmetica> ")"
