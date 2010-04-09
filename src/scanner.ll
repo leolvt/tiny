@@ -61,13 +61,14 @@ E	[Ee][+-]?{D}+
  /*** BEGIN RULES ***/
 
  /* reserved words */
-"sqrt"	{ return token::SQRT; }
-"or" { return token::OR; }
-"and" { return token::AND; }
-"not" { return token::NOT; }
-"writeStr" { return token::WRITESTR; }
-"writeVar" { return token::WRITEVAR; }
-"writeln" { return token::WRITELN; }
+"sqrt"		{ return token::SQRT; }
+"or"		{ return token::OR; }
+"and"		{ return token::AND; }
+"not"		{ return token::NOT; }
+"writeStr"	{ return token::WRITESTR; }
+"writeVar"	{ return token::WRITEVAR; }
+"writeln"	{ return token::WRITELN; }
+"read"		{ return token::READ; }
 
  /* Floating Point Number */
 (({D}+"."{D}*)|("."{D}+)){E}? {

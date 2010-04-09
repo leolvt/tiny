@@ -4,6 +4,7 @@
 #include <string>
 #include "comando.h"
 #include "comando_write.h"
+#include "comando_read.h"
 #include "expressao.h"
 #include "fator.h"
 #include "exp_aritmetica.h"
@@ -62,6 +63,7 @@
 %token					WRITESTR	"writeStr"
 %token					WRITEVAR	"writeVar"
 %token					WRITELN		"writeln"
+%token					READ		"read"
 %token					OR			"or operator"
 %token					AND			"and operator"
 %token					NOT			"not operator"
@@ -103,6 +105,7 @@ program: exp_arit					{ driver.exp_aritmetica = $1; }
 comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | WRITEVAR '(' VARNAME ')'	{ $$ = new ComandoWrite(writeVar,NULL,$3); }
 	   | WRITELN					{ $$ = new ComandoWrite(writeln); }
+	   | READ '(' VARNAME ')'		{ $$ = new ComandoRead($3); }
 
 exp_arit: exp_arit '+' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, Adicao);}
 		| exp_arit '-' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, 

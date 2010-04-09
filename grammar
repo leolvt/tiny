@@ -6,7 +6,7 @@
 #<comando> ::= "writeStr" "(" <string> ")"
 #<comando> ::= "writeVar" "(" <variavel> ")"
 #<comando> ::= "writeln"
-<comando> ::= "read" "(" <variavel> ")"
+#<comando> ::= "read" "(" <variavel> ")"
 <comando> ::= <variavel> ":=" <exp_aritmetica>
 <comando> ::= "for" <variavel> ":=" <exp_aritmetica> "to" <exp_aritmetica> "do"
 				  <lista_comandos>
