@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-
+#include "comando.h"
 #include "expressao.h"
 
 /** The tiny namespace is used to encapsulate the three parser classes
@@ -35,7 +35,8 @@ public:
     std::string streamname;
 
 	// Store the parsing result
-	Expressao * resultado;
+	Expressao * exp_aritmetica;
+	Comando * comando;
 
     /** Invoke the scanner and parser for a stream.
      * @param in	input stream

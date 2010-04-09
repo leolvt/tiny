@@ -18,7 +18,7 @@ PARAM =
 
 OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
 	   ${OBJDIR}/driver.o ${OBJDIR}/contexto.o ${OBJDIR}/exp_aritmetica.o \
-	   ${OBJDIR}/fator.o
+	   ${OBJDIR}/fator.o ${OBJDIR}/comando_write.o
 
 ARCHIVE_FILES = src/ bin/ Makefile README
 ARCHIVE_NAME = tiny.tar.gz
@@ -67,6 +67,10 @@ ${OBJDIR}/main.o: src/main.cpp
 
 ${OBJDIR}/contexto.o: src/contexto.cpp src/contexto.h
 	@echo "Compilando Modulo Contexto"
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+
+${OBJDIR}/comando_write.o: src/comando_write.cpp src/comando_write.h
+	@echo "Compilando Modulo Comando Write (writeStr, writeVar, writeln)"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/fator.o: src/fator.cpp src/fator.h

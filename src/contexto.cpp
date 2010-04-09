@@ -12,7 +12,7 @@ namespace tiny {
  * Inicia as 26 variáveis com valor nulo */
 Contexto::Contexto()
 {
-	this->variaveis.resize(26, 1.3);
+	this->variaveis.resize(26, 0);
 }
 
 /* ========================================================================== */

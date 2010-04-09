@@ -21,8 +21,16 @@ int main(int argc, char * argv[])
 		if (result)
 		{
 			Contexto Ctx;
-			std::cout << "Resultado: " << driver.resultado->Calcula(Ctx) 
-				<< std::endl;
+			if (driver.exp_aritmetica)
+			{
+				std::cout << "Resultado: "; 
+				std::cout << driver.exp_aritmetica->Calcula(Ctx) << std::endl;
+			}
+			if (driver.comando)
+			{
+				std::cout << "Executando Comando " << std::endl;
+				driver.comando->Interpreta(Ctx);
+			}
 		}
 		else
 		{

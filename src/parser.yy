@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <string>
+#include "comando.h"
+#include "comando_write.h"
 #include "expressao.h"
 #include "fator.h"
 #include "exp_aritmetica.h"
@@ -52,10 +54,14 @@
     double				doubleVal;
 	class Expressao *	expVal;
 	std::string		*	strVal;
+	class Comando	*	cmdVal;
 }
 
 %token					END	     0	"end of file"
 %token					SQRT		"square root"
+%token					WRITESTR	"writeStr"
+%token					WRITEVAR	"writeVar"
+%token					WRITELN		"writeln"
 %token					OR			"or operator"
 %token					AND			"and operator"
 %token					NOT			"not operator"
@@ -63,6 +69,7 @@
 %token	<strVal>		STRING		"string"
 %token	<charVal>		VARNAME		"variable name"
 
+%type	<cmdVal>		comando
 %type	<expVal>		exp_arit
 %type	<expVal>		exp_mul
 %type	<expVal>		fator
@@ -89,10 +96,13 @@
 
 %% /*** Grammar Rules ***/
 
-program: exp_arit				{ driver.resultado = $1; }
-	   | STRING					{ std::cout << *$1 << std::endl; 
-									exit(0); }
+program: exp_arit					{ driver.exp_aritmetica = $1; }
+	   | comando					{ driver.comando = $1; }
 ;
+
+comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
+	   | WRITEVAR '(' VARNAME ')'	{ $$ = new ComandoWrite(writeVar,NULL,$3); }
+	   | WRITELN					{ $$ = new ComandoWrite(writeln); }
 
 exp_arit: exp_arit '+' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, Adicao);}
 		| exp_arit '-' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, 

@@ -12,13 +12,16 @@ Driver::Driver()
     : trace_scanning(false),
       trace_parsing(false)
 {
+	this->exp_aritmetica = NULL;
+	this->comando = NULL;
 }
 
 /* ========================================================================== */
 
 Driver::~Driver()
 {
-	if (this->resultado) delete this->resultado;
+	if (this->exp_aritmetica) delete this->exp_aritmetica;
+	if (this->comando) delete this->comando;
 }
 
 /* ========================================================================== */

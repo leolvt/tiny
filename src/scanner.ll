@@ -65,6 +65,9 @@ E	[Ee][+-]?{D}+
 "or" { return token::OR; }
 "and" { return token::AND; }
 "not" { return token::NOT; }
+"writeStr" { return token::WRITESTR; }
+"writeVar" { return token::WRITEVAR; }
+"writeln" { return token::WRITELN; }
 
  /* Floating Point Number */
 (({D}+"."{D}*)|("."{D}+)){E}? {
