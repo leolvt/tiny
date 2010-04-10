@@ -1,0 +1,12 @@
+writeStr("Entre com b: ");
+read(b);
+for i:= 10 downto 1 do 
+  r:= b * i;
+  writeVar(b);
+  writeStr(" x ");
+  writeVar(i);
+  writeStr(" = ");
+  writeVar(r);
+  writeln;
+endfor
+endp

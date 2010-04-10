@@ -69,10 +69,11 @@ E	[Ee][+-]?{D}+
 "writeVar"	{ return token::WRITEVAR; }
 "writeln"	{ return token::WRITELN; }
 "read"		{ return token::READ; }
+"endp"		{ return token::ENDP; }
 ":="		{ return token::ATRIBUI; }
 
  /* Floating Point Number */
-(({D}+"."{D}*)|("."{D}+)){E}? {
+(({D}+"."{D}*)|("."{D}+)|({D}+)){E}? {
     yylval->doubleVal = atof(yytext);
     return token::DOUBLE;
 }

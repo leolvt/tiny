@@ -1,0 +1,19 @@
+writeStr("Informe os coeficientes da equacao do 2o grau");
+writeln;
+writeStr("Coeficiente a= ");
+read(a);
+writeStr("Coeficiente b= ");
+read(b);
+writeStr("Coeficiente c= ");
+read(c);
+d:= b * b - 4 * a * c ;
+x:= (0 - b + sqrt(d))/(2*a) ;
+y:= (0 - b - sqrt(d))/(2*a) ;
+writeln;
+writeStr("Raiz x1= ");
+writeVar(x);
+writeln;
+writeStr("Raiz x2= ");
+writeVar(y);
+writeln;
+endp

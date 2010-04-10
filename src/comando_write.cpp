@@ -10,6 +10,8 @@ ComandoWrite::ComandoWrite( TipoWrite t, std::string * s, char nomevar)
 {
 	this->tipo = t;
 	this->str = s;
+	if (this->str)
+		*(this->str) = this->str->substr(1,this->str->length()-2);
 	this->var = nomevar;
 }
 

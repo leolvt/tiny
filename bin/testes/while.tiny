@@ -1,0 +1,22 @@
+writeStr("Entre com o numero de linhas: ");
+read(n);
+if n < 0 then
+   writeStr("numero de linhas menor que 0");
+else    
+  a:= 1;
+  while  a <= n do
+    i:= 1;
+    while i <= n - a do 
+      writeStr(" ");
+      i:= i + 1;
+    endw
+    i:= 1;
+    while i <= 2 * a - 1 do
+      writeStr("*");
+      i:= i+1;
+    endw
+    writeln;
+    a:= a + 1;
+  endw
+endif
+endp

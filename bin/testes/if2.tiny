@@ -1,0 +1,27 @@
+writeStr("Informe os coeficientes da equacao do 2o grau");
+writeln;
+writeStr("Coeficiente a= ");
+read(a);
+writeStr("Coeficiente b= ");
+read(b);
+writeStr("Coeficiente c= ");
+read(c);
+d:= b * b - 4 * a * c ;
+if d < 0  then
+   writeStr("A equacao nao possui raizes reais");
+else
+  x:= (- b + sqrt(d))/(2*a) ;
+  y:= (- b - sqrt(d))/(2*a) ;
+  if d = 0 then
+     writeStr("A equacao possui duas raizes iguais");
+  else
+     writeStr("A equacao possui duas raizes diferentes");
+  endif
+  writeln;
+  writeStr("Raiz x1= ");
+  writeVar(x);
+  writeln;
+  writeStr("Raiz x2= ");
+  writeVar(y);
+endif
+endp

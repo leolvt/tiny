@@ -72,6 +72,7 @@
 %token					AND			"and operator"
 %token					NOT			"not operator"
 %token					ATRIBUI		":="
+%token					ENDP		"endp"
 %token	<doubleVal> 	DOUBLE		"double"
 %token	<strVal>		STRING		"string"
 %token	<charVal>		VARNAME		"variable name"
@@ -104,7 +105,7 @@
 
 %% /*** Grammar Rules ***/
 
-program:  lista_comandos			{ driver.programa = $1; }
+program:  lista_comandos ENDP		{ driver.programa = $1; }
 ;
 
 lista_comandos: comando ';'			{ $$ = new ListaComandos($1); }

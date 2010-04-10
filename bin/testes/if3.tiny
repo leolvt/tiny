@@ -1,0 +1,13 @@
+read(a);
+read(b);
+if a > 0 then
+   writeStr("a maior que zero");
+else
+   writeStr("Entrei no primeiro else");
+   if b > 0 then
+      writeStr("b maior que zero");
+   endif
+   writeStr("ultima linha do else");
+endif
+writeStr("fim");
+endp
