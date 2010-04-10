@@ -1,7 +1,7 @@
 <programa> ::= <lista_comandos> "endp"
 
-<lista_comandos> ::= <comando> ";"
-<lista_comandos> ::= <comando> ";" <lista_comandos>
+#<lista_comandos> ::= <comando> ";"
+#<lista_comandos> ::= <comando> ";" <lista_comandos>
 
 #<comando> ::= "writeStr" "(" <string> ")"
 #<comando> ::= "writeVar" "(" <variavel> ")"

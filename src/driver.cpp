@@ -12,14 +12,14 @@ Driver::Driver()
     : trace_scanning(false),
       trace_parsing(false)
 {
-	this->comando = NULL;
+	this->programa = NULL;
 }
 
 /* ========================================================================== */
 
 Driver::~Driver()
 {
-	if (this->comando) delete this->comando;
+	if (this->programa) delete this->programa;
 }
 
 /* ========================================================================== */

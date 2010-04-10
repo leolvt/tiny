@@ -1,8 +1,9 @@
 #include <iostream>
+#include <vector>
 #include "driver.h"
 #include "contexto.h"
-#include "expressao.h"
 using namespace tiny;
+using namespace std;
 
 #if 1
 int main(int argc, char * argv[])
@@ -21,10 +22,10 @@ int main(int argc, char * argv[])
 
 		if (result)
 		{
-			if (driver.comando)
+			if (driver.programa)
 			{
 				std::cout << "Executando Comando " << std::endl;
-				driver.comando->Interpreta(Ctx);
+				driver.programa->Interpreta(Ctx);
 			}
 		}
 		else

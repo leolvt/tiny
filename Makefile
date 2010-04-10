@@ -17,8 +17,10 @@ BINNAME = bin/tiny
 PARAM = 
 
 OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
-	   ${OBJDIR}/driver.o ${OBJDIR}/contexto.o ${OBJDIR}/exp_aritmetica.o \
-	   ${OBJDIR}/fator.o ${OBJDIR}/comando_write.o ${OBJDIR}/comando_read.o \
+	   ${OBJDIR}/driver.o ${OBJDIR}/contexto.o \
+	   ${OBJDIR}/exp_aritmetica.o ${OBJDIR}/fator.o \
+	   ${OBJDIR}/lista_comandos.o \
+	   ${OBJDIR}/comando_write.o ${OBJDIR}/comando_read.o \
 	   ${OBJDIR}/comando_atribuicao.o
 
 ARCHIVE_FILES = src/ bin/ Makefile README
@@ -72,6 +74,10 @@ ${OBJDIR}/main.o: src/main.cpp
 
 ${OBJDIR}/contexto.o: src/contexto.cpp src/contexto.h
 	@echo "Compilando Modulo Contexto"
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+
+${OBJDIR}/lista_comandos.o: src/lista_comandos.cpp src/lista_comandos.h
+	@echo "Compilando Modulo Lista de Comandos"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/comando_atribuicao.o: src/comando_atribuicao.cpp src/comando_atribuicao.h

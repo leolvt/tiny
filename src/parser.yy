@@ -1,8 +1,10 @@
-%{ /*** C/C++ Declarations ***/
+%code requires{ 
+/*** C/C++ Declarations ***/
 
 #include <iostream>
 #include <string>
 #include "comando.h"
+#include "lista_comandos.h"
 #include "comando_write.h"
 #include "comando_read.h"
 #include "comando_atribuicao.h"
@@ -10,7 +12,7 @@
 #include "exp_aritmetica.h"
 #include "fator.h"
 
-%}
+}
 
 /*** yacc/bison Declarations ***/
 
@@ -54,9 +56,10 @@
 %union {
     char				charVal;
     double				doubleVal;
-	class Expressao *	expVal;
 	std::string		*	strVal;
-	class Comando	*	cmdVal;
+	ListaComandos	*	listaVal;
+	Expressao		*	expVal;
+	Comando			*	cmdVal;
 }
 
 %token					END	     0	"end of file"
@@ -73,6 +76,7 @@
 %token	<strVal>		STRING		"string"
 %token	<charVal>		VARNAME		"variable name"
 
+%type	<listaVal>		lista_comandos
 %type	<cmdVal>		comando
 %type	<expVal>		exp_arit
 %type	<expVal>		exp_mul
@@ -100,8 +104,12 @@
 
 %% /*** Grammar Rules ***/
 
-program:  comando					{ driver.comando = $1; }
+program:  lista_comandos			{ driver.programa = $1; }
 ;
+
+lista_comandos: comando ';'			{ $$ = new ListaComandos($1); }
+			  | lista_comandos comando ';' 
+									{ $$ = $1; $1->AdicionaComando($2); }
 
 comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | WRITEVAR '(' VARNAME ')'	{ $$ = new ComandoWrite(writeVar,NULL,$3); }
