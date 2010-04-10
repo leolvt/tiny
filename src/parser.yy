@@ -5,9 +5,10 @@
 #include "comando.h"
 #include "comando_write.h"
 #include "comando_read.h"
+#include "comando_atribuicao.h"
 #include "expressao.h"
-#include "fator.h"
 #include "exp_aritmetica.h"
+#include "fator.h"
 
 %}
 
@@ -67,6 +68,7 @@
 %token					OR			"or operator"
 %token					AND			"and operator"
 %token					NOT			"not operator"
+%token					ATRIBUI		":="
 %token	<doubleVal> 	DOUBLE		"double"
 %token	<strVal>		STRING		"string"
 %token	<charVal>		VARNAME		"variable name"
@@ -98,14 +100,15 @@
 
 %% /*** Grammar Rules ***/
 
-program: exp_arit					{ driver.exp_aritmetica = $1; }
-	   | comando					{ driver.comando = $1; }
+program:  comando					{ driver.comando = $1; }
 ;
 
 comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | WRITEVAR '(' VARNAME ')'	{ $$ = new ComandoWrite(writeVar,NULL,$3); }
 	   | WRITELN					{ $$ = new ComandoWrite(writeln); }
 	   | READ '(' VARNAME ')'		{ $$ = new ComandoRead($3); }
+	   | VARNAME ATRIBUI exp_arit	{ $$ = new ComandoAtribuicao($1, $3); }
+;
 
 exp_arit: exp_arit '+' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, Adicao);}
 		| exp_arit '-' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, 

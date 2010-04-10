@@ -12,6 +12,7 @@ int main(int argc, char * argv[])
 	std::cout << "Reading from stdin" << std::endl;
 
     std::string line;
+	Contexto Ctx;
     while( std::cout << "input: " &&  std::getline(std::cin, line) &&
 	   !line.empty() )
     {
@@ -20,12 +21,6 @@ int main(int argc, char * argv[])
 
 		if (result)
 		{
-			Contexto Ctx;
-			if (driver.exp_aritmetica)
-			{
-				std::cout << "Resultado: "; 
-				std::cout << driver.exp_aritmetica->Calcula(Ctx) << std::endl;
-			}
 			if (driver.comando)
 			{
 				std::cout << "Executando Comando " << std::endl;

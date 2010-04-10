@@ -35,7 +35,7 @@ public:
     std::string streamname;
 
 	// Store the parsing result
-	Expressao * exp_aritmetica;
+//	Expressao * exp_aritmetica;
 	Comando * comando;
 
     /** Invoke the scanner and parser for a stream.

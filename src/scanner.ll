@@ -69,6 +69,7 @@ E	[Ee][+-]?{D}+
 "writeVar"	{ return token::WRITEVAR; }
 "writeln"	{ return token::WRITELN; }
 "read"		{ return token::READ; }
+":="		{ return token::ATRIBUI; }
 
  /* Floating Point Number */
 (({D}+"."{D}*)|("."{D}+)){E}? {
