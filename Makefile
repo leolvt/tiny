@@ -25,7 +25,7 @@ ARCHIVE_NAME = tiny.tar.gz
 
 # =============
 
-.PHONY: clean archive run all 
+.PHONY: clean archive run valgrind dir all 
 
 # =============
 
@@ -55,12 +55,16 @@ valgrind: all
 	@valgrind ./${BINNAME} ${PARAM}
 	@echo "======================"
 
+dir:
+	@mkdir -p ${OBJDIR}
+
 # =============
 
-${BINNAME}: ${OBJS}
+${BINNAME}: dir ${OBJS}
+	@mkdir -p ${OBJDIR}
 	@echo "Gerando ${BINNAME}!!"
 	@${CXX} ${CXXFLAGS} ${OBJS} -o ${BINNAME}
-	
+
 ${OBJDIR}/main.o: src/main.cpp
 	@echo "Compilando Modulo Principal"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
