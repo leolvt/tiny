@@ -74,6 +74,7 @@
 %token					ATRIBUI		":="
 %token					ENDP		"endp"
 %token	<doubleVal> 	DOUBLE		"double"
+%token	<boolVal> 	BOOL		"bool"
 %token	<strVal>		STRING		"string"
 %token	<charVal>		VARNAME		"variable name"
 
@@ -82,6 +83,9 @@
 %type	<expVal>		exp_arit
 %type	<expVal>		exp_mul
 %type	<expVal>		fator
+%type	<expVal>		exp_bool
+%type	<expVal>		exp_rel
+%type	<expVal>		bool
 
 %left '+'
 
@@ -118,6 +122,19 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | READ '(' VARNAME ')'		{ $$ = new ComandoRead($3); }
 	   | VARNAME ATRIBUI exp_arit	{ $$ = new ComandoAtribuicao($1, $3); }
 ;
+
+exp_bool: exp_rel
+	| exp_bool OR exp_rel
+	| exp_bool AND exp_rel
+	| NOT exp_bool
+
+exp_rel: exp_arit '>' exp_arit
+	| exp_arit '<' exp_arit
+	| exp_arit '=' exp_arit
+	| boolean
+	
+boolean: BOOL			{ $$ = new Boolean(Valor, $1); }
+	| '(' exp_bool ')'
 
 exp_arit: exp_arit '+' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, Adicao);}
 		| exp_arit '-' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, 
