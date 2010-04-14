@@ -9,8 +9,10 @@
 #include "comando_read.h"
 #include "comando_atribuicao.h"
 #include "expressao.h"
+#include "expressaoBool.H"
 #include "exp_aritmetica.h"
 #include "fator.h"
+#include "boolean.h"
 
 }
 
@@ -115,6 +117,7 @@ program:  lista_comandos ENDP		{ driver.programa = $1; }
 lista_comandos: comando ';'			{ $$ = new ListaComandos($1); }
 			  | lista_comandos comando ';' 
 									{ $$ = $1; $1->AdicionaComando($2); }
+;
 
 comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | WRITEVAR '(' VARNAME ')'	{ $$ = new ComandoWrite(writeVar,NULL,$3); }
@@ -127,14 +130,17 @@ exp_bool: exp_rel
 	| exp_bool OR exp_rel
 	| exp_bool AND exp_rel
 	| NOT exp_bool
+;
 
 exp_rel: exp_arit '>' exp_arit
 	| exp_arit '<' exp_arit
 	| exp_arit '=' exp_arit
 	| boolean
+;
 	
 boolean: BOOL			{ $$ = new Boolean(Valor, $1); }
-	| '(' exp_bool ')'
+	| '(' exp_bool ')'	{ $$ = new Boolean(Parentesis, false, $2); }
+;
 
 exp_arit: exp_arit '+' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, Adicao);}
 		| exp_arit '-' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, 

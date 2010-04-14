@@ -1,23 +1,2 @@
 >> README <<
 Thanks for reading!
-
-===============================================================================
-
-Dúvidas na implementação (possíveis erros):
-
-Na implementação da gramática referente a expressões booleanas (exp_bool) é
-possível colocar:
-
-exp_bool: exp_rel
-	| exp_bool OR exp_bool
-	| exp_bool AND exp_bool
-	| NOT exp_bool
-	| boolean
-
-?
-
-A parte exp_bool OR exp_bool pode ser assim? Tinha sido pensada antes como:
-
-	exp_bool OR bolean
-
-Mas essa forma limita o poder do OR. (?)

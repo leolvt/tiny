@@ -21,7 +21,7 @@ OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
 	   ${OBJDIR}/exp_aritmetica.o ${OBJDIR}/fator.o \
 	   ${OBJDIR}/lista_comandos.o \
 	   ${OBJDIR}/comando_write.o ${OBJDIR}/comando_read.o \
-	   ${OBJDIR}/comando_atribuicao.o
+	   ${OBJDIR}/comando_atribuicao.o ${OBJDIR}/boolean.o
 
 ARCHIVE_FILES = src/ bin/ Makefile README
 ARCHIVE_NAME = tiny.tar.gz
@@ -94,6 +94,10 @@ ${OBJDIR}/comando_write.o: src/comando_write.cpp src/comando_write.h
 
 ${OBJDIR}/fator.o: src/fator.cpp src/fator.h
 	@echo "Compilando Modulo Fator" 
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+	
+${OBJDIR}/boolean.o: src/boolean.cpp src/boolean.h 
+	@echo "Compilando Modulo boolean"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/exp_aritmetica.o: src/exp_aritmetica.cpp src/exp_aritmetica.h
