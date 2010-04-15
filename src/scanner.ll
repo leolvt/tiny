@@ -65,6 +65,9 @@ E	[Ee][+-]?{D}+
 "or"		{ return token::OR; }
 "and"		{ return token::AND; }
 "not"		{ return token::NOT; }
+">="		{ return token::GTE; }
+"<="		{ return token::LTE; }
+"!="		{ return token::DIF; }
 "writeStr"	{ return token::WRITESTR; }
 "writeVar"	{ return token::WRITEVAR; }
 "writeln"	{ return token::WRITELN; }
@@ -76,6 +79,12 @@ E	[Ee][+-]?{D}+
 (({D}+"."{D}*)|("."{D}+)|({D}+)){E}? {
     yylval->doubleVal = atof(yytext);
     return token::DOUBLE;
+}
+
+ /* Boolean value */
+(true | false) {
+    yylval->boolVal = (0 == strcmp( "true", yytext ) );
+    return token::BOOL;
 }
 
  /* string literal */
