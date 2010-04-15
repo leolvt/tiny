@@ -77,6 +77,10 @@ E	[Ee][+-]?{D}+
 "read"		{ return token::READ; }
 "endp"		{ return token::ENDP; }
 ":="		{ return token::ATRIBUI; }
+"for"		{ return token::FOR; }
+"to"		{ return token::TO; }
+"do"		{ return token::DO; }
+"end"		{ return token::END; }
 
  /* Floating Point Number */
 (({D}+"."{D}*)|("."{D}+)|({D}+)){E}? {

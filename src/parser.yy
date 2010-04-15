@@ -5,6 +5,7 @@
 #include <string>
 #include "comando.h"
 #include "lista_comandos.h"
+#include "comando_for.h"
 #include "comando_write.h"
 #include "comando_read.h"
 #include "comando_atribuicao.h"
@@ -68,7 +69,6 @@
 	Comando			*	cmdVal;
 }
 
-%token					END	     0	"end of file"
 %token					SQRT		"square root"
 %token					WRITESTR	"writeStr"
 %token					WRITEVAR	"writeVar"
@@ -82,21 +82,24 @@
 %token					DIF			"!="
 %token					ATRIBUI		":="
 %token					ENDP		"endp"
+%token					FOR			"for"
+%token					TO			"to"
+%token					DO			"do"
+%token					END			"end"
 %token	<doubleVal> 	DOUBLE		"double"
-%token	<boolVal> 	BOOL		"bool"
+%token	<boolVal>		BOOL		"bool"
 %token	<strVal>		STRING		"string"
 %token	<charVal>		VARNAME		"variable name"
 
 %type	<listaVal>		lista_comandos
 %type	<cmdVal>		comando
+%type	<cmdVal>		comando_for
 %type	<expVal>		exp_arit
 %type	<expVal>		exp_mul
 %type	<expVal>		fator
 %type	<expVal>		exp_bool
 %type	<expVal>		exp_rel
 %type	<expVal>		boolean
-
-%left '+'
 
 /* start symbol is named "start" */
 %start program
@@ -131,7 +134,11 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | WRITELN					{ $$ = new ComandoWrite(writeln); }
 	   | READ '(' VARNAME ')'		{ $$ = new ComandoRead($3); }
 	   | VARNAME ATRIBUI exp_arit	{ $$ = new ComandoAtribuicao($1, $3); }
+	   | comando_for				{ $$ = $1; }
 ;
+
+comando_for: FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos END 
+		   { $$ = new ComandoFor($2, $4, $6, $8); }
 
 exp_bool: exp_rel			{ $$ = $1; }
 	| exp_bool OR exp_rel		{ $$ = new ExpressaoBooleana($1, $3, op_or); }

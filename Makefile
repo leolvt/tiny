@@ -19,7 +19,7 @@ PARAM =
 OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
 	   ${OBJDIR}/driver.o ${OBJDIR}/contexto.o \
 	   ${OBJDIR}/exp_aritmetica.o ${OBJDIR}/fator.o \
-	   ${OBJDIR}/lista_comandos.o \
+	   ${OBJDIR}/lista_comandos.o ${OBJDIR}/comando_for.o \
 	   ${OBJDIR}/comando_write.o ${OBJDIR}/comando_read.o \
 	   ${OBJDIR}/comando_atribuicao.o ${OBJDIR}/boolean.o \
 	   ${OBJDIR}/exp_booleana.o ${OBJDIR}/exp_relacional.o
@@ -79,6 +79,10 @@ ${OBJDIR}/contexto.o: src/contexto.cpp src/contexto.h
 
 ${OBJDIR}/lista_comandos.o: src/lista_comandos.cpp src/lista_comandos.h
 	@echo "Compilando Modulo Lista de Comandos"
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+
+${OBJDIR}/comando_for.o: src/comando_for.cpp src/comando_for.h
+	@echo "Compilando Modulo Comando For"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/comando_atribuicao.o: src/comando_atribuicao.cpp src/comando_atribuicao.h

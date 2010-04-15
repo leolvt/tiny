@@ -8,9 +8,9 @@
 #<comando> ::= "writeln"
 #<comando> ::= "read" "(" <variavel> ")"
 #<comando> ::= <variavel> ":=" <exp_aritmetica>
-<comando> ::= "for" <variavel> ":=" <exp_aritmetica> "to" <exp_aritmetica> "do"
-				  <lista_comandos>
-			  "end"	
+#<comando> ::= "for" <variavel> ":=" <exp_aritmetica> "to" <exp_aritmetica> "do"
+#				  <lista_comandos>
+#			  "end"	
 <comando> ::= "while" <exp_booleana> "do"
 			      <lista_comandos>
 			  "end"
