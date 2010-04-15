@@ -131,7 +131,7 @@ src/parser.cpp: src/parser.yy
 
 src/scanner.cpp: src/scanner.ll
 	@echo "Gerando Scanner"
-	@$(LEX) $(LFLAGS) -o $@ $<
+	@$(LEX) $(LFLAGS) -o$@ $<
 
 #${OBJDIR}/bla.o: src/bla.cpp src/bla.h 
 #	@echo "Compilando Modulo bla"

@@ -12,4 +12,4 @@ class ExpressaoBool{
 } /* namespace tiny */
 
 
-#endif /* TINY_EXPRESSAOBOOL_H
+#endif /* TINY_EXPRESSAOBOOL_H */

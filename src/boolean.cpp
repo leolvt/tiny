@@ -24,7 +24,7 @@ bool Avalia(){
 		case Valor:
 			res = this->valor;
 			break;
-		case Parentesis:
+		case Parenteses:
 			res = this->Expb->Avalia();
 			break;
 		default:

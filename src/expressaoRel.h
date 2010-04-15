@@ -6,10 +6,10 @@
 namespace tiny{
 
 class ExpressaoRel{
-	public
+	public:
 		virtual ~ExpressaoRel() {};
 		virtual bool Relaciona(Contexto& C) = 0;
-}
+};
 
 } /* namespace tiny */
 

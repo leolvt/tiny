@@ -25,22 +25,22 @@ bool ExpressaoRelacional::Relaciona(Contexto& C){
 	bool res;
 	
 	switch (this->tipoOp){
-		case op_>:
+		case op_GT:
 			res = ( this->Oper1->Calcula(C) > this->Oper2->Calcula(C) );
 			break;
-		case op_>=:
+		case op_GTE:
 			res = ( this->Oper1->Calcula(C) >= this->Oper2->Calcula(C) );
 			break;
-		case op_<:
+		case op_LT:
 			res = ( this->Oper1->Calcula(C) < this->Oper2->Calcula(C) );
 			break;
-		case op_<=:
+		case op_LTE:
 			res = ( this->Oper1->Calcula(C) <= this->Oper2->Calcula(C) );
 			break;
-		case op_=:
+		case op_EQ:
 			res = ( this->Oper1->Calcula(C) == this->Oper2->Calcula(C) );
 			break;
-		case op_!=:
+		case op_DIF:
 			res = ( this->Oper1->Calcula(C) != this->Oper2->Calcula(C) );
 			break;
 		default:

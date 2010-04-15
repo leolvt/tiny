@@ -9,7 +9,7 @@ namespace tiny {
 
 typedef enum {
 	Valor,
-	Parentesis
+	Parenteses
 } TipoBoolean;
 
 class Boolean : public ExpressaoBool {

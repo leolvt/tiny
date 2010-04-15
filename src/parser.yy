@@ -61,6 +61,7 @@
 %union {
     char				charVal;
     double				doubleVal;
+    bool				boolVal;
 	std::string		*	strVal;
 	ListaComandos	*	listaVal;
 	Expressao		*	expVal;
@@ -93,7 +94,7 @@
 %type	<expVal>		fator
 %type	<expVal>		exp_bool
 %type	<expVal>		exp_rel
-%type	<expVal>		bool
+%type	<expVal>		boolean
 
 %left '+'
 
@@ -135,20 +136,20 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 exp_bool: exp_rel			{ $$ = $1; }
 	| exp_bool OR exp_rel		{ $$ = new ExpressaoBooleana($1, $3, op_or); }
 	| exp_bool AND exp_rel		{ $$ = new ExpressaoBooleana($1, $3, op_and); }
-	| NOT exp_bool			{ $$ = new ExpressaoBooleana($1, NULL, op_not); }
+	| NOT exp_bool			{ $$ = new ExpressaoBooleana($2, NULL, op_not); }
 ;
 
-exp_rel: exp_arit '>' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_>); }
-	| exp_arit GTE exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_>=); }
-	| exp_arit '<' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_<); }
-	| exp_arit LTE exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_<=); }
-	| exp_arit '=' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_=); }
-	| exp_arit 'DIF' exp_arit	{ $$ = new ExpressaoRelacional($1, $3, op_!=); }
+exp_rel: exp_arit '>' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_GT); }
+	| exp_arit GTE exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_GTE); }
+	| exp_arit '<' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_LT); }
+	| exp_arit LTE exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_LTE); }
+	| exp_arit '=' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_EQ); }
+	| exp_arit 'DIF' exp_arit	{ $$ = new ExpressaoRelacional($1, $3, op_DIF); }
 	| boolean			{ $$ = $1 }
 ;
 	
 boolean: BOOL			{ $$ = new Boolean(Valor, $1); }
-	| '(' exp_bool ')'	{ $$ = new Boolean(Parentesis, false, $2); }
+	| '(' exp_bool ')'	{ $$ = new Boolean(Parenteses, false, $2); }
 ;
 
 exp_arit: exp_arit '+' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, Adicao);}

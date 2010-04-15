@@ -2,7 +2,10 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
 #include "scanner.h"
+
+using namespace std;
 
 /* import the parser's token type into a local typedef */
 typedef tiny::Parser::token token;
@@ -82,7 +85,7 @@ E	[Ee][+-]?{D}+
 }
 
  /* Boolean value */
-(true | false) {
+"true"|"false" {
     yylval->boolVal = (0 == strcmp( "true", yytext ) );
     return token::BOOL;
 }

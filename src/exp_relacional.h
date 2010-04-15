@@ -6,12 +6,12 @@
 namespace tiny{
 
 typedef enum{
-	op_>,
-	op_>=,
-	op_<,
-	op_<=,
-	op_=,
-	op_!=
+	op_GT,
+	op_GTE,
+	op_LT,
+	op_LTE,
+	op_EQ,
+	op_DIF
 } TipoOperRel;
 
 class ExpressaoRelacional : public ExpressaoRel {

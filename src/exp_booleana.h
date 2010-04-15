@@ -21,7 +21,7 @@ class ExpressaoBooleana : public ExpressaoBool {
 				TipoOper tipoOp);
 		virtual ~ExpressaoBooleana();
 		virtual bool Avalia();
-}
+};
 
 } /* namespace tiny */
 
