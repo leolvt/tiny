@@ -70,7 +70,7 @@ E	[Ee][+-]?{D}+
 "not"		{ return token::NOT; }
 ">="		{ return token::GTE; }
 "<="		{ return token::LTE; }
-"!="		{ return token::DIF; }
+"<>"		{ return token::NEQ; }
 "writeStr"	{ return token::WRITESTR; }
 "writeVar"	{ return token::WRITEVAR; }
 "writeln"	{ return token::WRITELN; }

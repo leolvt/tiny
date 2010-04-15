@@ -98,6 +98,9 @@
 %type	<expVal>		exp_mul
 %type	<expVal>		fator
 %type	<expVal>		exp_bool
+%type	<expVal>		exp_and
+%type	<expVal>		exp_not
+%type	<expVal>		exp_or
 %type	<expVal>		exp_rel
 %type	<expVal>		boolean
 
