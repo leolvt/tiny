@@ -21,27 +21,27 @@
 <comando> ::= "if" <exp_booleana> "then" <lista_comandos> "else"
 			      <lista_comandos> "end"
 
-<exp_booleana> ::= <exp_or>
+# <exp_booleana> ::= <exp_or>
 
-<exp_or> ::= <exp_or> or <exp_and>
-<exp_or> ::= <exp_and>
+# <exp_or> ::= <exp_or> or <exp_and>
+# <exp_or> ::= <exp_and>
 
-<exp_and> ::=  <exp_and> and <exp_not>
-<exp_and> ::=  <exp_not>
+# <exp_and> ::=  <exp_and> and <exp_not>
+# <exp_and> ::=  <exp_not>
 
-<exp_not> ::= not <exp_rel>
-<exp_not> ::= <exp_rel>
+# <exp_not> ::= not <exp_rel>
+# <exp_not> ::= <exp_rel>
 
-<exp_rel> ::= <exp_aritmetica> "<" <exp_aritmetica>
-<exp_rel> ::= <exp_aritmetica> ">" <exp_aritmetica>
-<exp_rel> ::= <exp_aritmetica> "<=" <exp_aritmetica>
-<exp_rel> ::= <exp_aritmetica> "<=" <exp_aritmetica>
-<exp_rel> ::= <exp_aritmetica> "<>" <exp_aritmetica>
-<exp_rel> ::= <exp_aritmetica> "=" <exp_aritmetica>
-<exp_rel> ::= "(" <exp_booleana> ")"
-<exp_rel> ::= <valor_booleano>
+# <exp_rel> ::= <exp_aritmetica> "<" <exp_aritmetica>
+# <exp_rel> ::= <exp_aritmetica> ">" <exp_aritmetica>
+# <exp_rel> ::= <exp_aritmetica> "<=" <exp_aritmetica>
+# <exp_rel> ::= <exp_aritmetica> "<=" <exp_aritmetica>
+# <exp_rel> ::= <exp_aritmetica> "<>" <exp_aritmetica>
+# <exp_rel> ::= <exp_aritmetica> "=" <exp_aritmetica>
+# <exp_rel> ::= "(" <exp_booleana> ")"
+# <exp_rel> ::= <valor_booleano>
 
-<valor_booleano> ::= "true" | "false"
+# <valor_booleano> ::= "true" | "false"
 
 # <exp_aritmetica> ::= <exp_aritmetica> "+" <exp_mul>
 # <exp_aritmetica> ::= <exp_aritmetica> "-" <exp_mul> 
