@@ -21,7 +21,8 @@ OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
 	   ${OBJDIR}/exp_aritmetica.o ${OBJDIR}/fator.o \
 	   ${OBJDIR}/lista_comandos.o \
 	   ${OBJDIR}/comando_write.o ${OBJDIR}/comando_read.o \
-	   ${OBJDIR}/comando_atribuicao.o ${OBJDIR}/boolean.o
+	   ${OBJDIR}/comando_atribuicao.o ${OBJDIR}/boolean.o \
+	   ${OBJDIR}/exp_booleana.o
 
 ARCHIVE_FILES = src/ bin/ Makefile README
 ARCHIVE_NAME = tiny.tar.gz
@@ -102,6 +103,10 @@ ${OBJDIR}/boolean.o: src/boolean.cpp src/boolean.h
 
 ${OBJDIR}/exp_aritmetica.o: src/exp_aritmetica.cpp src/exp_aritmetica.h
 	@echo "Compilando Modulo Expressao Aritmetica" 
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+	
+${OBJDIR}/exp_booleana.o: src/exp_booleana.cpp src/exp_booleana.h
+	@echo "Compilando Modulo Expressao Booleana" 
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/driver.o: src/driver.cpp src/driver.h 

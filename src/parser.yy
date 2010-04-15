@@ -9,10 +9,11 @@
 #include "comando_read.h"
 #include "comando_atribuicao.h"
 #include "expressao.h"
-#include "expressaoBool.H"
+#include "expressaoBool.h"
 #include "exp_aritmetica.h"
 #include "fator.h"
 #include "boolean.h"
+#include "exp_booleana.h"
 
 }
 
@@ -126,10 +127,10 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | VARNAME ATRIBUI exp_arit	{ $$ = new ComandoAtribuicao($1, $3); }
 ;
 
-exp_bool: exp_rel
-	| exp_bool OR exp_rel
-	| exp_bool AND exp_rel
-	| NOT exp_bool
+exp_bool: exp_rel			{ $$ = $1; }
+	| exp_bool OR exp_rel		{ $$ new ExpressaoBooleana($1, $3, op_or); }
+	| exp_bool AND exp_rel		{ $$ new ExpressaoBooleana($1, $3, op_and); }
+	| NOT exp_bool			{ $$ new ExpressaoBooleana($1, NULL, op_not); }
 ;
 
 exp_rel: exp_arit '>' exp_arit
