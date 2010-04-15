@@ -36,6 +36,9 @@
 <exp_rel> ::= <exp_aritmetica> "<>" <exp_aritmetica>
 <exp_rel> ::= <exp_aritmetica> "=" <exp_aritmetica>
 <exp_rel> ::= "(" <exp_booleana> ")"
+<exp_rel> ::= <valor_booleano>
+
+<valor_booleano> ::= "true" | "false"
 
 # <exp_aritmetica> ::= <exp_aritmetica> "+" <exp_mul>
 # <exp_aritmetica> ::= <exp_aritmetica> "-" <exp_mul> 
