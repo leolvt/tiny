@@ -9,7 +9,7 @@ class ExpressaoBool{
 		virtual bool Avalia () = 0;
 };
 
-}
+} /* namespace tiny */
 
 
-#endif /* TINY_EXPRSSAOBOOL_H
+#endif /* TINY_EXPRESSAOBOOL_H

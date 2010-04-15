@@ -23,7 +23,7 @@ ExpressaoBooleana::~ExpressaoBooleana(){
 bool ExpressaoBooleana::Avalia(){
 	bool res;
 	
-	switch(this->tipoOp){
+	switch (this->tipoOp){
 		case op_or:
 			res = this->Oper1->Avalia() || this->Oper2->Avalia();
 			break;

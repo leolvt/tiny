@@ -10,10 +10,12 @@
 #include "comando_atribuicao.h"
 #include "expressao.h"
 #include "expressaoBool.h"
+#include "expressaoRel.h"
 #include "exp_aritmetica.h"
 #include "fator.h"
 #include "boolean.h"
 #include "exp_booleana.h"
+#include "exp_relacional.h"
 
 }
 
@@ -74,6 +76,8 @@
 %token					OR			"or operator"
 %token					AND			"and operator"
 %token					NOT			"not operator"
+%token					GTE			">="
+%token					LTE			"<="
 %token					ATRIBUI		":="
 %token					ENDP		"endp"
 %token	<doubleVal> 	DOUBLE		"double"
@@ -128,15 +132,17 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 ;
 
 exp_bool: exp_rel			{ $$ = $1; }
-	| exp_bool OR exp_rel		{ $$ new ExpressaoBooleana($1, $3, op_or); }
-	| exp_bool AND exp_rel		{ $$ new ExpressaoBooleana($1, $3, op_and); }
-	| NOT exp_bool			{ $$ new ExpressaoBooleana($1, NULL, op_not); }
+	| exp_bool OR exp_rel		{ $$ = new ExpressaoBooleana($1, $3, op_or); }
+	| exp_bool AND exp_rel		{ $$ = new ExpressaoBooleana($1, $3, op_and); }
+	| NOT exp_bool			{ $$ = new ExpressaoBooleana($1, NULL, op_not); }
 ;
 
-exp_rel: exp_arit '>' exp_arit
-	| exp_arit '<' exp_arit
-	| exp_arit '=' exp_arit
-	| boolean
+exp_rel: exp_arit '>' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_>); }
+	| exp_arit GTE exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_>=); }
+	| exp_arit '<' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_<); }
+	| exp_arit LTE exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_<=); }
+	| exp_arit '=' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_=); }
+	| boolean			{ $$ = $1 }
 ;
 	
 boolean: BOOL			{ $$ = new Boolean(Valor, $1); }

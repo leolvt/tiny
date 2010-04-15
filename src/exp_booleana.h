@@ -15,7 +15,7 @@ class ExpressaoBooleana : public ExpressaoBool {
 	private:
 		ExpressaoBool *Oper1;
 		ExpressaoBool *Oper2;
-		TipoOper tipoOp;
+		TipoOperBool tipoOp;
 	public:
 		ExpressaoBooleana(ExpressaoBool *Oper1, ExpressaoBool *Oper2, 
 				TipoOper tipoOp);
