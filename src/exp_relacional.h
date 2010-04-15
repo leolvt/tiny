@@ -10,7 +10,8 @@ typedef enum{
 	op_>=,
 	op_<,
 	op_<=,
-	op_=
+	op_=,
+	op_!=
 } TipoOperRel;
 
 class ExpressaoRelacional : public ExpressaoRel {

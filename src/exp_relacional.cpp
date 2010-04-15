@@ -40,6 +40,9 @@ bool ExpressaoRelacional::Relaciona(Contexto& C){
 		case op_=:
 			res = ( this->Oper1->Calcula(C) == this->Oper2->Calcula(C) );
 			break;
+		case op_!=:
+			res = ( this->Oper1->Calcula(C) != this->Oper2->Calcula(C) );
+			break;
 		default:
 			res = false;
 			break;

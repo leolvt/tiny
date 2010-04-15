@@ -78,6 +78,7 @@
 %token					NOT			"not operator"
 %token					GTE			">="
 %token					LTE			"<="
+%token					DIF			"!="
 %token					ATRIBUI		":="
 %token					ENDP		"endp"
 %token	<doubleVal> 	DOUBLE		"double"
@@ -142,6 +143,7 @@ exp_rel: exp_arit '>' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_>); }
 	| exp_arit '<' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_<); }
 	| exp_arit LTE exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_<=); }
 	| exp_arit '=' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_=); }
+	| exp_arit 'DIF' exp_arit	{ $$ = new ExpressaoRelacional($1, $3, op_!=); }
 	| boolean			{ $$ = $1 }
 ;
 	
