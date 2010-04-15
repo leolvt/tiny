@@ -20,7 +20,7 @@ class ExpressaoBooleana : public ExpressaoBool {
 		ExpressaoBooleana(ExpressaoBool *Oper1, ExpressaoBool *Oper2, 
 				TipoOper tipoOp);
 		virtual ~ExpressaoBooleana();
-		virtual bool Avalia();
+		virtual bool Avalia(Contexto& C);
 };
 
 } /* namespace tiny */

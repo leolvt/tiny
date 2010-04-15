@@ -20,18 +20,18 @@ ExpressaoBooleana::~ExpressaoBooleana(){
 
 /* ========================================================================== */
 
-bool ExpressaoBooleana::Avalia(){
+bool ExpressaoBooleana::Avalia(Contexto& C){
 	bool res;
 	
 	switch (this->tipoOp){
 		case op_or:
-			res = this->Oper1->Avalia() || this->Oper2->Avalia();
+			res = this->Oper1->Avalia(C) || this->Oper2->Avalia(C);
 			break;
 		case op_and:
-			res = this->Oper1->Avalia() && this->Oper2->Avalia();
+			res = this->Oper1->Avalia(C) && this->Oper2->Avalia(C);
 			break;
 		case op_not:
-			res = ! (this->Oper1->Avalia());
+			res = ! (this->Oper1->Avalia(C));
 			break;
 		default:
 			res = false;

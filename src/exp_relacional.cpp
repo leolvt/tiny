@@ -1,5 +1,4 @@
 #include "exp_relacional.h"
-#include "expressao.h"
 
 namespace tiny{
 
@@ -21,7 +20,7 @@ ExpressaoRelacional::~ExpressaoRelacional(){
 
 /* ========================================================================== */
 
-bool ExpressaoRelacional::Relaciona(Contexto& C){
+bool ExpressaoRelacional::Avalia(Contexto& C){
 	bool res;
 	
 	switch (this->tipoOp){
@@ -40,7 +39,7 @@ bool ExpressaoRelacional::Relaciona(Contexto& C){
 		case op_EQ:
 			res = ( this->Oper1->Calcula(C) == this->Oper2->Calcula(C) );
 			break;
-		case op_DIF:
+		case op_NEQ:
 			res = ( this->Oper1->Calcula(C) != this->Oper2->Calcula(C) );
 			break;
 		default:

@@ -1,7 +1,8 @@
 #ifndef TINY_EXP_RELACIONAL_H
 #define TINY_EXP_RELACIONAL_H
 
-#include "expressaoRel.h"
+#include "expressaoBool.h"
+#include "expressao.h"
 
 namespace tiny{
 
@@ -14,7 +15,7 @@ typedef enum{
 	op_DIF
 } TipoOperRel;
 
-class ExpressaoRelacional : public ExpressaoRel {
+class ExpressaoRelacional : public ExpressaoBool {
 	private:
 		Expressao *Oper1;
 		Expressao *Oper2;
@@ -23,7 +24,7 @@ class ExpressaoRelacional : public ExpressaoRel {
 		ExpressaoRelacional(Expressao *Oper1, Expressao *Oper2, 
 				TipoOperRel tipoOp);
 		virtual ~ExpressaoRelacional();
-		virtual bool Relaciona(Contexto& C);
+		virtual bool Avalia(Contexto& C);
 };
 
 } /* namespace tiny */

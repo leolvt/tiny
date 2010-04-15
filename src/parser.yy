@@ -11,7 +11,6 @@
 #include "comando_atribuicao.h"
 #include "expressao.h"
 #include "expressaoBool.h"
-#include "expressaoRel.h"
 #include "exp_aritmetica.h"
 #include "fator.h"
 #include "boolean.h"
@@ -79,7 +78,7 @@
 %token					NOT			"not operator"
 %token					GTE			">="
 %token					LTE			"<="
-%token					DIF			"!="
+%token					NEQ			"<>"
 %token					ATRIBUI		":="
 %token					ENDP		"endp"
 %token					FOR			"for"
@@ -144,10 +143,19 @@ comando_for: FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos END
 			{ $$ = new ComandoFor(down, $2, $4, $6, $8); }
 ;
 
-exp_bool: exp_rel			{ $$ = $1; }
-	| exp_bool OR exp_rel		{ $$ = new ExpressaoBooleana($1, $3, op_or); }
-	| exp_bool AND exp_rel		{ $$ = new ExpressaoBooleana($1, $3, op_and); }
-	| NOT exp_bool			{ $$ = new ExpressaoBooleana($2, NULL, op_not); }
+exp_bool: exp_or	{ $$ = $1 }
+;
+
+exp_or: exp_or OR exp_and	{ $$ = new ExpressaoBooleana($1, $3, op_or); }
+	| exp_and		{ $$ = $1 }
+;
+
+exp_and: exp_and AND exp_not	{ $$ = new ExpressaoBooleana($1, $3, op_and); }
+	| exp_not		{ $$ = $1 }
+;
+
+exp_not: NOT exp_rel	{ $$ = new ExpressaoBooleana($2, NULL, op_not); }
+	| exp_rel	{ $$ = $1 }
 ;
 
 exp_rel: exp_arit '>' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_GT); }
@@ -155,8 +163,8 @@ exp_rel: exp_arit '>' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_GT); }
 	| exp_arit '<' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_LT); }
 	| exp_arit LTE exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_LTE); }
 	| exp_arit '=' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_EQ); }
-	| exp_arit 'DIF' exp_arit	{ $$ = new ExpressaoRelacional($1, $3, op_DIF); }
-	| boolean			{ $$ = $1 }
+	| exp_arit 'NEQ' exp_arit	{ $$ = new ExpressaoRelacional($1, $3, op_NEQ); }
+	| exp_bool			{ $$ = $1 }
 ;
 	
 boolean: BOOL			{ $$ = new Boolean(Valor, $1); }
