@@ -79,6 +79,7 @@ E	[Ee][+-]?{D}+
 ":="		{ return token::ATRIBUI; }
 "for"		{ return token::FOR; }
 "to"		{ return token::TO; }
+"downto"	{ return token::DOWNTO; }
 "do"		{ return token::DO; }
 "end"		{ return token::END; }
 

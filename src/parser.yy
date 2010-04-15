@@ -84,6 +84,7 @@
 %token					ENDP		"endp"
 %token					FOR			"for"
 %token					TO			"to"
+%token					DOWNTO		"downto"
 %token					DO			"do"
 %token					END			"end"
 %token	<doubleVal> 	DOUBLE		"double"
@@ -138,7 +139,10 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 ;
 
 comando_for: FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos END 
-		   { $$ = new ComandoFor($2, $4, $6, $8); }
+			{ $$ = new ComandoFor(up, $2, $4, $6, $8); }
+	| FOR VARNAME ATRIBUI exp_arit DOWNTO exp_arit DO lista_comandos END
+			{ $$ = new ComandoFor(down, $2, $4, $6, $8); }
+;
 
 exp_bool: exp_rel			{ $$ = $1; }
 	| exp_bool OR exp_rel		{ $$ = new ExpressaoBooleana($1, $3, op_or); }

@@ -8,15 +8,18 @@
 
 namespace tiny {
 
+typedef enum { up, down } TipoFor;
+
 class ComandoFor : public Comando
 {
 	private:
+		TipoFor tipo;
 		char nome_var;
 		Expressao * exp_min;
 		Expressao * exp_max;
 		ListaComandos * lista_cmds;
 	public:
-		ComandoFor(char vn, Expressao * min, Expressao * max, 
+		ComandoFor(TipoFor tipo, char vn, Expressao * min, Expressao * max, 
 				ListaComandos * lista);
 		~ComandoFor();
 		void Interpreta( Contexto& C );

@@ -4,9 +4,10 @@ namespace tiny {
 
 /* ========================================================================== */
 
-ComandoFor::ComandoFor(char vn, Expressao * min, Expressao * max, 
+ComandoFor::ComandoFor(TipoFor tipo, char vn, Expressao * min, Expressao * max, 
 		ListaComandos * lista)
 {
+	this->tipo = tipo;
 	this->nome_var = vn;
 	this->exp_min = min;
 	this->exp_max = max;
@@ -27,16 +28,28 @@ ComandoFor::~ComandoFor()
 void ComandoFor::Interpreta( Contexto& C )
 {
 	// Define valor inicial
-	C.defineVariavel( this->nome_var , this->exp_min->Calcula(C) );
+	C.defineVariavel( nome_var , exp_min->Calcula(C) );
+	double i = exp_min->Calcula(C);
 
-	// Enquanto Variavel for menor ou igual a valor maximo
-	while ( C.obtemVariavel(this->nome_var) <= this->exp_max->Calcula(C) )
+	// Loop For crescente
+	if (tipo == up)
 	{
-		// Executa comandos
-		this->lista_cmds->Interpreta(C);
-		// Incrementa Variavel
-		C.defineVariavel( nome_var , C.obtemVariavel(nome_var)+1.0 );
+		for ( ; i >= exp_max->Calcula(C) ; i = C.obtemVariavel(nome_var) )
+		{
+			lista_cmds->Interpreta(C);
+			C.defineVariavel( nome_var, i-1.0 );
+		}
+	} 
+	// Loop for decrescente
+	else 
+	{
+		for ( ; i <= exp_max->Calcula(C) ; i = C.obtemVariavel(nome_var) )
+		{
+			lista_cmds->Interpreta(C);
+			C.defineVariavel( nome_var, i+1.0 );
+		}
 	}
+
 }
 
 /* ========================================================================== */
