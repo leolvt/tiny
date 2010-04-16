@@ -5,7 +5,7 @@ namespace tiny{
 /* ========================================================================== */
 
 ExpressaoBooleana::ExpressaoBooleana(ExpressaoBool *Oper1, ExpressaoBool *Oper2, 
-				TipoOper tipoOp){
+				TipoOperBool tipoOp){
 	this->Oper1 = Oper1;
 	this->Oper2 = Oper2;
 	this->tipoOp = tipoOp;
@@ -35,7 +35,7 @@ bool ExpressaoBooleana::Avalia(Contexto& C){
 			break;
 		default:
 			res = false;
-			break
+			break;
 	}
 	
 	return res;

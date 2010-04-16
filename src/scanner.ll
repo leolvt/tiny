@@ -166,7 +166,7 @@ int TinyFlexLexer::yylex()
  * another input file, and scanning continues. If it returns true (non-zero),
  * then the scanner terminates, returning 0 to its caller. */
 
-int TinyFlexLexer::yywrap()
+int Tinywrap()
 {
     return 1;
 }

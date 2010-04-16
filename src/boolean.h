@@ -20,7 +20,7 @@ class Boolean : public ExpressaoBool {
 	public:
 		Boolean(TipoBoolean tipo, bool valor = false, ExpressaoBool * Expb = NULL);
 		virtual ~Boolean();
-		virtual bool Avalia();
+		virtual bool Avalia(Contexto& C);
 };
 
 

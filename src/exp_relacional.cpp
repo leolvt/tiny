@@ -4,7 +4,7 @@ namespace tiny{
 
 /* ========================================================================== */
 
-ExpressaoRelacional::ExpressaoRelacionalExpressao *Oper1, Expressao *Oper2, 
+ExpressaoRelacional::ExpressaoRelacional(Expressao *Oper1, Expressao *Oper2, 
 				TipoOperRel tipoOp){
 	this->Oper1 = Oper1;
 	this->Oper2 = Oper2;

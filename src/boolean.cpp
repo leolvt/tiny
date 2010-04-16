@@ -2,8 +2,8 @@
 
 namespace tiny{
 
-Boolean::Boolean(TipoFator tipo, bool valor, ExpressaoBool * Expb){
-	this->tipo = tipo;
+Boolean::Boolean(TipoBoolean tipoBoolean, bool valor, ExpressaoBool * Expb){
+	this->tipoBoolean = tipoBoolean;
 	this->valor = valor;
 	this->Expb = Expb;
 }
@@ -17,7 +17,7 @@ Boolean::~Boolean()
 
 /* ========================================================================== */
 
-bool Avalia(){
+bool Boolean::Avalia(Contexto& C){
 	bool res;
 	
 	switch (this->tipoBoolean){
@@ -25,7 +25,7 @@ bool Avalia(){
 			res = this->valor;
 			break;
 		case Parenteses:
-			res = this->Expb->Avalia();
+			res = this->Expb->Avalia(C);
 			break;
 		default:
 			res = false;
