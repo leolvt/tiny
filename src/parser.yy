@@ -68,6 +68,8 @@
 	class Comando		*	cmdVal;
 }
 
+%token					FIM		0	"end of file"
+%token					ENDP		"endp"
 %token					SQRT		"square root"
 %token					WRITESTR	"writeStr"
 %token					WRITEVAR	"writeVar"
@@ -80,12 +82,11 @@
 %token					LTE			"<="
 %token					NEQ			"<>"
 %token					ATRIBUI		":="
-%token					ENDP		"endp"
 %token					FOR			"for"
 %token					TO			"to"
 %token					DOWNTO		"downto"
 %token					DO			"do"
-%token					END			"end"
+%token					END			"end of block"
 %token	<doubleVal> 	DOUBLE		"double"
 %token	<boolVal>		BOOL		"bool"
 %token	<strVal>		STRING		"string"
@@ -124,7 +125,7 @@
 
 %% /*** Grammar Rules ***/
 
-program:  lista_comandos ENDP		{ driver.programa = $1; }
+program:  lista_comandos ENDP 		{ driver.programa = $1; }
 ;
 
 lista_comandos: comando ';'			{ $$ = new ListaComandos($1); }

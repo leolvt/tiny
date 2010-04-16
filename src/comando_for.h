@@ -15,12 +15,12 @@ class ComandoFor : public Comando
 	private:
 		TipoFor tipo;
 		char nome_var;
-		Expressao * exp_min;
-		Expressao * exp_max;
+		Expressao * exp_val_inicial;
+		Expressao * exp_val_final;
 		ListaComandos * lista_cmds;
 	public:
-		ComandoFor(TipoFor tipo, char vn, Expressao * min, Expressao * max, 
-				ListaComandos * lista);
+		ComandoFor(TipoFor tipo, char vn, Expressao * val_inicial, 
+				Expressao * val_final, ListaComandos * lista);
 		~ComandoFor();
 		void Interpreta( Contexto& C );
 };

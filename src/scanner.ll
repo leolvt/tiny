@@ -75,13 +75,13 @@ E	[Ee][+-]?{D}+
 "writeVar"	{ return token::WRITEVAR; }
 "writeln"	{ return token::WRITELN; }
 "read"		{ return token::READ; }
+"end"		{ return token::END; }
 "endp"		{ return token::ENDP; }
 ":="		{ return token::ATRIBUI; }
 "for"		{ return token::FOR; }
 "to"		{ return token::TO; }
 "downto"	{ return token::DOWNTO; }
 "do"		{ return token::DO; }
-"end"		{ return token::END; }
 
  /* Floating Point Number */
 (({D}+"."{D}*)|("."{D}+)|({D}+)){E}? {
@@ -117,6 +117,8 @@ E	[Ee][+-]?{D}+
     yylloc->lines(yyleng); yylloc->step();
 /*    return token::EOL; */
 }
+
+<<EOF>>	{ return token::FIM; }
 
  /* pass all other characters up to bison */
 . {
