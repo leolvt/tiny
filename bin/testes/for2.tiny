@@ -3,10 +3,10 @@ read(n);
 for a:= 1 to n do 
   for i:= 1 to n-a do
     writeStr(" ");
-  endfor
+  end;
   for i:= 1 to (2*a-1) do
     writeStr("*");
-  endfor
+  end;
   writeln;
-endfor
+end;
 endp

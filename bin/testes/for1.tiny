@@ -8,5 +8,5 @@ for i:= 10 downto 1 do
   writeStr(" = ");
   writeVar(r);
   writeln;
-endfor
+end;
 endp
