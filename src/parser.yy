@@ -1,4 +1,4 @@
-%code requires{ 
+%{ 
 /*** C/C++ Declarations ***/
 
 #include <iostream>
@@ -17,7 +17,7 @@
 #include "exp_booleana.h"
 #include "exp_relacional.h"
 
-}
+%}
 
 /*** yacc/bison Declarations ***/
 
@@ -59,13 +59,13 @@
  /*** BEGIN TOKENS ***/
 
 %union {
-    char				charVal;
-    double				doubleVal;
-    bool				boolVal;
-	std::string		*	strVal;
-	ListaComandos	*	listaVal;
-	Expressao		*	expVal;
-	Comando			*	cmdVal;
+    char					charVal;
+    double					doubleVal;
+    bool					boolVal;
+	std::string			*	strVal;
+	class ListaComandos	*	listaVal;
+	class Expressao		*	expVal;
+	class Comando		*	cmdVal;
 }
 
 %token					SQRT		"square root"
