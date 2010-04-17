@@ -17,8 +17,8 @@
 <comando> ::= "while" <exp_booleana> "do"
 			      <lista_comandos>
 			  "end"
-<comando> ::= "if" <exp_booleana> "then" <lista_comandos> "end"
-<comando> ::= "if" <exp_booleana> "then" <lista_comandos> "else"
+# <comando> ::= "if" <exp_booleana> "then" <lista_comandos> "end"
+# <comando> ::= "if" <exp_booleana> "then" <lista_comandos> "else"
 			      <lista_comandos> "end"
 
 # <exp_booleana> ::= <exp_or>
