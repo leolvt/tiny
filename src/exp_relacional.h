@@ -12,7 +12,8 @@ typedef enum{
 	op_LT,
 	op_LTE,
 	op_EQ,
-	op_NEQ
+	op_NEQ,
+	parenteses
 } TipoOperRel;
 
 class ExpressaoRelacional : public ExpressaoBool {

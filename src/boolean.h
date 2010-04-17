@@ -7,18 +7,11 @@
 namespace tiny {
 
 
-typedef enum {
-	Valor,
-	Parenteses
-} TipoBoolean;
-
 class Boolean : public ExpressaoBool {
 	private:
-		TipoBoolean tipoBoolean;
 		bool valor;
-		ExpressaoBool *Expb;
 	public:
-		Boolean(TipoBoolean tipo, bool valor = false, ExpressaoBool * Expb = NULL);
+		Boolean(bool valor = false);
 		virtual ~Boolean();
 		virtual bool Avalia(Contexto& C);
 };

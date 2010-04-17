@@ -168,11 +168,10 @@ exp_rel: exp_arit '>' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_GT); }
 	| exp_arit LTE exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_LTE); }
 	| exp_arit '=' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_EQ); }
 	| exp_arit 'NEQ' exp_arit	{ $$ = new ExpressaoRelacional($1, $3, op_NEQ); }
-	| exp_bool			{ $$ = $1 }
+	| '(' exp_bool ')'		{ $$ = $2; }
 ;
 	
-boolean: BOOL			{ $$ = new Boolean(Valor, $1); }
-	| '(' exp_bool ')'	{ $$ = new Boolean(Parenteses, false, $2); }
+boolean: BOOL			{ $$ = new Boolean($1); }	
 ;
 
 exp_arit: exp_arit '+' exp_mul	{ $$ = new ExpressaoAritmetica($1, $3, Adicao);}
