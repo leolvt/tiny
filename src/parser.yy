@@ -85,12 +85,13 @@
 %token					NEQ			"<>"
 %token					ATRIBUI		":="
 %token					FOR			"for"
-%token					IF			"if"
-%token					THEN			"then"
-%token					ELSE			"else"
 %token					TO			"to"
 %token					DOWNTO		"downto"
 %token					DO			"do"
+%token					IF			"if"
+%token					THEN			"then"
+%token					ELSE			"else"
+%token					WHILE			"while"
 %token					END			"end of block"
 %token	<doubleVal> 	DOUBLE		"double"
 %token	<boolVal>		BOOL		"bool"
@@ -101,6 +102,7 @@
 %type	<cmdVal>		comando
 %type	<cmdVal>		comando_for
 %type	<cmdVal>		comando_if
+%type	<cmdVal>		comando_while
 %type	<expVal>		exp_arit
 %type	<expVal>		exp_mul
 %type	<expVal>		fator
@@ -156,6 +158,9 @@ comando_for: FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos END
 
 comando_if: IF exp_bool THEN lista_comandos END				{ $$ = new ComandoIf($2, $4); }
 	| IF exp_bool THEN lista_comandos ELSE lista_comandos END	{ $$ = new ComandoIf($2, $4, $6); }
+;
+
+comando_while: WHILE exp_bool DO lista_comandos END	{  }
 ;
 
 exp_bool: exp_or	{ $$ = $1; }
