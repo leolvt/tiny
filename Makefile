@@ -23,7 +23,7 @@ OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
 	   ${OBJDIR}/comando_write.o ${OBJDIR}/comando_read.o \
 	   ${OBJDIR}/comando_atribuicao.o ${OBJDIR}/boolean.o \
 	   ${OBJDIR}/exp_booleana.o ${OBJDIR}/exp_relacional.o \
-	   ${OBJDIR}/comando_if.o
+	   ${OBJDIR}/comando_if.o ${OBJDIR}/comando_while.o
 
 ARCHIVE_FILES = src/ bin/ Makefile README
 ARCHIVE_NAME = tiny.tar.gz
@@ -88,6 +88,10 @@ ${OBJDIR}/comando_for.o: src/comando_for.cpp src/comando_for.h
 
 ${OBJDIR}/comando_if.o: src/comando_if.cpp src/comando_if.h 
 	@echo "Compilando Modulo Comando If"
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+	
+${OBJDIR}/comando_while.o: src/comando_while.cpp src/comando_while.h 
+	@echo "Compilando Modulo Comando While"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/comando_atribuicao.o: src/comando_atribuicao.cpp src/comando_atribuicao.h

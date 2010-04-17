@@ -17,6 +17,7 @@
 #include "exp_booleana.h"
 #include "exp_relacional.h"
 #include "comando_if.h"
+#include "comando_while.h"
 
 %}
 
@@ -85,13 +86,17 @@
 %token					NEQ			"<>"
 %token					ATRIBUI		":="
 %token					FOR			"for"
-%token					IF			"if"
-%token					THEN			"then"
-%token					ELSE			"else"
 %token					TO			"to"
 %token					DOWNTO		"downto"
 %token					DO			"do"
+%token					IF			"if"
+%token					THEN			"then"
+%token					ELSE			"else"
+%token					ENDIF			"endif"
+%token					WHILE			"while"
+%token					ENDW			"endw"
 %token					END			"end of block"
+%token					ENDFOR			"endfor"
 %token	<doubleVal> 	DOUBLE		"double"
 %token	<boolVal>		BOOL		"bool"
 %token	<strVal>		STRING		"string"
@@ -101,6 +106,7 @@
 %type	<cmdVal>		comando
 %type	<cmdVal>		comando_for
 %type	<cmdVal>		comando_if
+%type	<cmdVal>		comando_while
 %type	<expVal>		exp_arit
 %type	<expVal>		exp_mul
 %type	<expVal>		fator
@@ -110,6 +116,9 @@
 %type	<expBool>		exp_or
 %type	<expBool>		exp_rel
 %type	<expBool>		boolean
+
+
+%left NEG     /* negation--unary minus */
 
 /* start symbol is named "start" */
 %start program
@@ -146,16 +155,27 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | VARNAME ATRIBUI exp_arit	{ $$ = new ComandoAtribuicao($1, $3); }
 	   | comando_for				{ $$ = $1; }
 	   | comando_if			{ $$ = $1; }
+	   | comando_while		{ $$ = $1; }
 ;
 
 comando_for: FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos END 
 			{ $$ = new ComandoFor(up, $2, $4, $6, $8); }
 	| FOR VARNAME ATRIBUI exp_arit DOWNTO exp_arit DO lista_comandos END
 			{ $$ = new ComandoFor(down, $2, $4, $6, $8); }
+	| FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos ENDFOR
+			{ $$ = new ComandoFor(up, $2, $4, $6, $8); }
+	| FOR VARNAME ATRIBUI exp_arit DOWNTO exp_arit DO lista_comandos ENDFOR
+			{ $$ = new ComandoFor(down, $2, $4, $6, $8); }
 ;
 
 comando_if: IF exp_bool THEN lista_comandos END				{ $$ = new ComandoIf($2, $4); }
 	| IF exp_bool THEN lista_comandos ELSE lista_comandos END	{ $$ = new ComandoIf($2, $4, $6); }
+	| IF exp_bool THEN lista_comandos ENDIF				{ $$ = new ComandoIf($2, $4); }
+	| IF exp_bool THEN lista_comandos ELSE lista_comandos ENDIF	{ $$ = new ComandoIf($2, $4, $6); }
+;
+
+comando_while: WHILE exp_bool DO lista_comandos END	{ $$ = new ComandoWhile($2, $4); }
+		| WHILE exp_bool DO lista_comandos ENDW	{ $$ = new ComandoWhile($2, $4); }
 ;
 
 exp_bool: exp_or	{ $$ = $1; }

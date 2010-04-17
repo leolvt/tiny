@@ -41,6 +41,9 @@ double Fator::Calcula(Contexto& C)
 		case RaizQuadrada:
 			res = sqrt(this->Exp->Calcula(C));
 			break;
+		case NumNeg:
+			res = 0 - this->Exp->Calcula(C);
+			break;
 		default:
 			res = 0.0;
 			break;

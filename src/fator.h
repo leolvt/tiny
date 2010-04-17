@@ -11,7 +11,8 @@ typedef enum
 	RaizQuadrada,
 	Variavel,
 	Numero,
-	Parentesis
+	Parentesis,
+	NumNeg
 } TipoFator;
 
 class Fator : public Expressao
