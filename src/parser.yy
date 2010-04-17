@@ -92,8 +92,10 @@
 %token					IF			"if"
 %token					THEN			"then"
 %token					ELSE			"else"
+%token					ENDIF			"endif"
 %token					WHILE			"while"
 %token					END			"end of block"
+%token					ENDFOR			"endfor"
 %token	<doubleVal> 	DOUBLE		"double"
 %token	<boolVal>		BOOL		"bool"
 %token	<strVal>		STRING		"string"
@@ -156,10 +158,16 @@ comando_for: FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos END
 			{ $$ = new ComandoFor(up, $2, $4, $6, $8); }
 	| FOR VARNAME ATRIBUI exp_arit DOWNTO exp_arit DO lista_comandos END
 			{ $$ = new ComandoFor(down, $2, $4, $6, $8); }
+	| FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos ENDFOR
+			{ $$ = new ComandoFor(up, $2, $4, $6, $8); }
+	| FOR VARNAME ATRIBUI exp_arit DOWNTO exp_arit DO lista_comandos ENDFOR
+			{ $$ = new ComandoFor(down, $2, $4, $6, $8); }
 ;
 
 comando_if: IF exp_bool THEN lista_comandos END				{ $$ = new ComandoIf($2, $4); }
 	| IF exp_bool THEN lista_comandos ELSE lista_comandos END	{ $$ = new ComandoIf($2, $4, $6); }
+	| IF exp_bool THEN lista_comandos ENDIF				{ $$ = new ComandoIf($2, $4); }
+	| IF exp_bool THEN lista_comandos ELSE lista_comandos ENDIF	{ $$ = new ComandoIf($2, $4, $6); }
 ;
 
 comando_while: WHILE exp_bool DO lista_comandos END	{ $$ = new ComandoWhile($2, $4); }

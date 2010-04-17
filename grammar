@@ -14,9 +14,9 @@
 <comando> ::= "for" <variavel> ":=" <exp_aritmetica> "downto" <exp_aritmetica> "do"
 				  <lista_comandos>
 			  "end"	
-<comando> ::= "while" <exp_booleana> "do"
-			      <lista_comandos>
-			  "end"
+# <comando> ::= "while" <exp_booleana> "do"
+#			      <lista_comandos>
+#			  "end"
 # <comando> ::= "if" <exp_booleana> "then" <lista_comandos> "end"
 # <comando> ::= "if" <exp_booleana> "then" <lista_comandos> "else"
 			      <lista_comandos> "end"

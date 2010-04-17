@@ -76,6 +76,7 @@ E	[Ee][+-]?{D}+
 "writeln"	{ return token::WRITELN; }
 "read"		{ return token::READ; }
 "end"		{ return token::END; }
+"endfor"	{ return token::ENDFOR; }
 "endp"		{ return token::ENDP; }
 ":="		{ return token::ATRIBUI; }
 "for"		{ return token::FOR; }
@@ -85,6 +86,7 @@ E	[Ee][+-]?{D}+
 "if"		{ return token::IF; }
 "then"		{ return token::THEN; }
 "else"		{ return token::ELSE; }
+"endif"		{ return token::ENDIF; }
 "while"		{ return token::WHILE; }
 
 
