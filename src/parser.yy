@@ -180,6 +180,7 @@ exp_rel: exp_arit '>' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_GT); }
 	| exp_arit '=' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_EQ); }
 	| exp_arit 'NEQ' exp_arit	{ $$ = new ExpressaoRelacional($1, $3, op_NEQ); }
 	| '(' exp_bool ')'		{ $$ = $2; }
+	| boolean			{ $$ = $1; }
 ;
 	
 boolean: BOOL			{ $$ = new Boolean($1); }	
