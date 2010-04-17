@@ -83,6 +83,9 @@
 %token					NEQ			"<>"
 %token					ATRIBUI		":="
 %token					FOR			"for"
+%token					IF			"if"
+%token					THEN			"then"
+%token					ELSE			"else"
 %token					TO			"to"
 %token					DOWNTO		"downto"
 %token					DO			"do"
@@ -95,6 +98,7 @@
 %type	<listaVal>		lista_comandos
 %type	<cmdVal>		comando
 %type	<cmdVal>		comando_for
+%type	<cmdVal>		comando_if
 %type	<expVal>		exp_arit
 %type	<expVal>		exp_mul
 %type	<expVal>		fator
@@ -139,12 +143,17 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | READ '(' VARNAME ')'		{ $$ = new ComandoRead($3); }
 	   | VARNAME ATRIBUI exp_arit	{ $$ = new ComandoAtribuicao($1, $3); }
 	   | comando_for				{ $$ = $1; }
+	   | comando_if			{ $$ = $1; }
 ;
 
 comando_for: FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos END 
 			{ $$ = new ComandoFor(up, $2, $4, $6, $8); }
 	| FOR VARNAME ATRIBUI exp_arit DOWNTO exp_arit DO lista_comandos END
 			{ $$ = new ComandoFor(down, $2, $4, $6, $8); }
+;
+
+comando_if: IF exp_bool THEN lista_comandos END				{ $$ = new ComandoIf($2, $4); }
+	| IF exp_bool THEN lista_comandos ELSE lista_comandos END	{ $$ = new ComandoIf($2, $4, $6); }
 ;
 
 exp_bool: exp_or	{ $$ = $1 }

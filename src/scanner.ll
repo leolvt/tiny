@@ -82,6 +82,10 @@ E	[Ee][+-]?{D}+
 "to"		{ return token::TO; }
 "downto"	{ return token::DOWNTO; }
 "do"		{ return token::DO; }
+"if"		{ return token::IF; }
+"then"		{ return token::THEN; }
+"else"		{ return token::ELSE; }
+
 
  /* Floating Point Number */
 (({D}+"."{D}*)|("."{D}+)|({D}+)){E}? {
