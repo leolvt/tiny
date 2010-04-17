@@ -88,6 +88,7 @@ E	[Ee][+-]?{D}+
 "else"		{ return token::ELSE; }
 "endif"		{ return token::ENDIF; }
 "while"		{ return token::WHILE; }
+"endw"		{ return token::ENDW; }
 
 
  /* Floating Point Number */

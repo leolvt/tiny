@@ -94,6 +94,7 @@
 %token					ELSE			"else"
 %token					ENDIF			"endif"
 %token					WHILE			"while"
+%token					ENDW			"endw"
 %token					END			"end of block"
 %token					ENDFOR			"endfor"
 %token	<doubleVal> 	DOUBLE		"double"
@@ -115,6 +116,9 @@
 %type	<expBool>		exp_or
 %type	<expBool>		exp_rel
 %type	<expBool>		boolean
+
+
+%left NEG     /* negation--unary minus */
 
 /* start symbol is named "start" */
 %start program
@@ -171,6 +175,7 @@ comando_if: IF exp_bool THEN lista_comandos END				{ $$ = new ComandoIf($2, $4);
 ;
 
 comando_while: WHILE exp_bool DO lista_comandos END	{ $$ = new ComandoWhile($2, $4); }
+		| WHILE exp_bool DO lista_comandos ENDW	{ $$ = new ComandoWhile($2, $4); }
 ;
 
 exp_bool: exp_or	{ $$ = $1; }
@@ -218,7 +223,8 @@ exp_mul: exp_mul '*' fator	{ $$ = new ExpressaoAritmetica($1, $3,
 fator: DOUBLE				{ $$ = new Fator(Numero, $1); }
 	 | VARNAME				{ $$ = new Fator(Variavel, 0.0, NULL, $1); }
 	 | '(' exp_arit ')'			{ $$ = new Fator(Parentesis, 0.0, $2); }
-	 | SQRT '(' exp_arit ')'	{ $$ = new Fator(RaizQuadrada, 0.0, $3);}
+	 | SQRT '(' exp_arit ')'	{ $$ = new Fator(RaizQuadrada, 0.0, $3); }
+	 | '-' exp_arit	%prec NEG	{ $$ = new Fator(NumNeg, 0.0, $2); }
 ;
 
 %% /*** Additional Code ***/
