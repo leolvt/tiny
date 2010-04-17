@@ -21,7 +21,7 @@ ComandoIf::~ComandoIf(){
 
 /* ========================================================================== */
 
-void Interpreta(Contexto& C){
+void ComandoIf::Interpreta(Contexto& C){
 	
 	if( teste->Avalia(C) )
 

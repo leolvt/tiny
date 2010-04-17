@@ -16,6 +16,7 @@
 #include "boolean.h"
 #include "exp_booleana.h"
 #include "exp_relacional.h"
+#include "comando_if.h"
 
 %}
 
@@ -65,6 +66,7 @@
 	std::string			*	strVal;
 	class ListaComandos	*	listaVal;
 	class Expressao		*	expVal;
+	class ExpressaoBool	*	expBool;
 	class Comando		*	cmdVal;
 }
 
@@ -102,12 +104,12 @@
 %type	<expVal>		exp_arit
 %type	<expVal>		exp_mul
 %type	<expVal>		fator
-%type	<expVal>		exp_bool
-%type	<expVal>		exp_and
-%type	<expVal>		exp_not
-%type	<expVal>		exp_or
-%type	<expVal>		exp_rel
-%type	<expVal>		boolean
+%type	<expBool>		exp_bool
+%type	<expBool>		exp_and
+%type	<expBool>		exp_not
+%type	<expBool>		exp_or
+%type	<expBool>		exp_rel
+%type	<expBool>		boolean
 
 /* start symbol is named "start" */
 %start program
@@ -156,19 +158,19 @@ comando_if: IF exp_bool THEN lista_comandos END				{ $$ = new ComandoIf($2, $4);
 	| IF exp_bool THEN lista_comandos ELSE lista_comandos END	{ $$ = new ComandoIf($2, $4, $6); }
 ;
 
-exp_bool: exp_or	{ $$ = $1 }
+exp_bool: exp_or	{ $$ = $1; }
 ;
 
 exp_or: exp_or OR exp_and	{ $$ = new ExpressaoBooleana($1, $3, op_or); }
-	| exp_and		{ $$ = $1 }
+	| exp_and		{ $$ = $1; }
 ;
 
 exp_and: exp_and AND exp_not	{ $$ = new ExpressaoBooleana($1, $3, op_and); }
-	| exp_not		{ $$ = $1 }
+	| exp_not		{ $$ = $1; }
 ;
 
 exp_not: NOT exp_rel	{ $$ = new ExpressaoBooleana($2, NULL, op_not); }
-	| exp_rel	{ $$ = $1 }
+	| exp_rel	{ $$ = $1; }
 ;
 
 exp_rel: exp_arit '>' exp_arit		{ $$ = new ExpressaoRelacional($1, $3, op_GT); }
