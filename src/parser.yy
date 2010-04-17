@@ -200,10 +200,24 @@ exp_mul: exp_mul '*' fator	{ $$ = new ExpressaoAritmetica($1, $3,
 	   | fator				{ $$ = $1; }
 ;
 
-fator: DOUBLE				{ $$ = new Fator(Numero, $1); }
+fator: /* empty 			{ $$ = new Fator(Numero, 0.0); } */
+	  DOUBLE				{ $$ = new Fator(Numero, $1); }
 	 | VARNAME				{ $$ = new Fator(Variavel, 0.0, NULL, $1); }
+	 | '-' VARNAME				{ $$ = new ExpressaoAritmetica(
+										new Fator(Numero, 0.0, NULL),
+										new Fator(Variavel, 0.0, NULL, $2),
+										Subtracao);  }
 	 | '(' exp_arit ')'			{ $$ = new Fator(Parentesis, 0.0, $2); }
+	 | '-' '(' exp_arit ')'			{ $$ = new ExpressaoAritmetica(
+											new Fator(Numero, 0.0),
+											new Fator(Parentesis, 0.0, $3),
+											Subtracao); }
 	 | SQRT '(' exp_arit ')'	{ $$ = new Fator(RaizQuadrada, 0.0, $3);}
+	 | '-' SQRT '(' exp_arit ')'	{ $$ = new ExpressaoAritmetica(
+											new Fator(Numero, 0.0),
+											new Fator(RaizQuadrada, 0.0, $4),
+											Subtracao); 
+									}
 ;
 
 %% /*** Additional Code ***/

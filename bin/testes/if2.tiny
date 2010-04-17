@@ -16,12 +16,12 @@ else
      writeStr("A equacao possui duas raizes iguais");
   else
      writeStr("A equacao possui duas raizes diferentes");
-  endif
+  end;
   writeln;
   writeStr("Raiz x1= ");
   writeVar(x);
   writeln;
   writeStr("Raiz x2= ");
   writeVar(y);
-endif
+end;
 endp

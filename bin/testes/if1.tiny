@@ -12,6 +12,6 @@ else
      writeStr("O triangulo eh isosceles");
   else
      writeStr("O triangulo eh escaleno");
-  endif
-endif
+  end;
+end;
 endp

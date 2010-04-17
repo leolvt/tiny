@@ -6,8 +6,8 @@ else
    writeStr("Entrei no primeiro else");
    if b > 0 then
       writeStr("b maior que zero");
-   endif
+   end;
    writeStr("ultima linha do else");
-endif
+end;
 writeStr("fim");
 endp
