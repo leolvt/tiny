@@ -26,15 +26,17 @@ int main(int argc, char * argv[])
     while( std::cout << "input: " &&  std::getline(std::cin, line) &&
 	   !line.empty() )
     {
-	
+		
+		line = line + " endp";
+		
 		bool result = driver.parse_string(line, "input");
 
 		if (result)
 		{
 			if (driver.programa)
 			{
-				std::cout << "Executando Comando " << std::endl;
 				driver.programa->Interpreta(Ctx);
+				std::cout << std::endl;
 			}
 		}
 		else
