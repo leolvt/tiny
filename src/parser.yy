@@ -17,6 +17,7 @@
 #include "exp_booleana.h"
 #include "exp_relacional.h"
 #include "comando_if.h"
+#include "comando_while.h"
 
 %}
 
@@ -148,6 +149,7 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | VARNAME ATRIBUI exp_arit	{ $$ = new ComandoAtribuicao($1, $3); }
 	   | comando_for				{ $$ = $1; }
 	   | comando_if			{ $$ = $1; }
+	   | comando_while		{ $$ = $1; }
 ;
 
 comando_for: FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos END 
@@ -160,7 +162,7 @@ comando_if: IF exp_bool THEN lista_comandos END				{ $$ = new ComandoIf($2, $4);
 	| IF exp_bool THEN lista_comandos ELSE lista_comandos END	{ $$ = new ComandoIf($2, $4, $6); }
 ;
 
-comando_while: WHILE exp_bool DO lista_comandos END	{  }
+comando_while: WHILE exp_bool DO lista_comandos END	{ $$ = new ComandoWhile($2, $4); }
 ;
 
 exp_bool: exp_or	{ $$ = $1; }

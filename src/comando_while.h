@@ -6,7 +6,7 @@
 
 namespace tiny{
 
-class ComandoWhile : public comando {
+class ComandoWhile : public Comando {
 	private:
 		ExpressaoBool *teste;
 		ListaComandos *lista_cmds;
