@@ -1,0 +1,251 @@
+\documentclass[12pt]{article}
+\usepackage{sbc-template}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{times,amsmath,epsfig}
+\usepackage{graphicx,url}
+ \makeatletter
+ \newif\if@restonecol
+ \makeatother
+ \let\algorithm\relax
+ \let\endalgorithm\relax 
+\usepackage[lined,algonl,ruled]{algorithm2e}
+\usepackage{multirow}
+\usepackage[brazil]{babel}   
+\usepackage[latin1]{inputenc}  
+
+\sloppy
+
+\title{Linguagem Tiny - Implementação por meio de OO}
+
+\author{Felipe Buzatti Nascimento}
+
+\address{Departamento de Ciência da Computação -- Universidade Federal de Minas Gerais (UFMG)
+\email{buzatti@dcc.ufmg.br}
+}
+
+\begin{document} 
+
+\maketitle
+
+\begin{resumo} 
+Este trabalho procura lidar com o problema de agrupamento(cluster analysis), comum em muitas situações, principalmente relacionado à mineração de dados, onde os dados coletados devem ser relacionados. O agrupamento pode apontar essas relações explicitando quais elementos tem características em comum. Mas esse agrupamento pode ser feito de muitas formas, então nesse trabalho nos restringimos ao estudo da estatística de hopkins, que nos dá informações sobre a qualidade do cluster, permitindo assim, determinar um bom agrupamento. Para gerar a base de dados necessária à aplicação da estatística de Hopkins usamos o método conhecido como Análise de Monte Carlo.
+\end{resumo}
+
+\section{INTRODUÇÃO}
+
+	A estatística de Hopkins dá uma pontuação para o agrupamento, permitindo assim, sabermos se uma seleção é melhor que outra em termos de melhor agrupamento. Se possuimos tal estatística podemos realizar alguns agrupamentos, de acordo com uma estratégia fundamentalmente aleatória conhecida como análise de Monte Carlo a ser discutida no restante desse trabalho e julgar qual o melhor agrupamento dentre os testados baseado no "escore" providenciado pela estatística de Hopkins. Procurar um algoritmo eficiente para esse processo é o objetivo desse trabalho.
+	
+	O trabalho também é uma oportunidade para discutir estruturas de dados mais eficientes e métodos de alocação dinâmica.
+	
+	O restante deste relatório é organizado da seguinte forma. A Seção~\ref{trabalhos relacionados} discute alguns temas relacionados ao trabalho. A Seção~\ref{solucao proposta} descreve o problema de forma mais detalhada, tratando da estatística de Hopkins e da análise de Monte Carlo. A Seção~\ref{implementacao} trata de detalhes específicos da implementação do trabalho. A Seção~\ref{conclusao} conclui o trabalho.
+
+\section{REFERÊNCIAS RELACIONADAS}
+\label{trabalhos relacionados}
+
+Podemos dividir as referências associadas ao problema estudado e à solução proposta dentre os seguintes grupos:
+\begin{itemize}
+\item \textbf{Agrupamento (cluster analysis):} 
+	O agrupamento consiste em classificar um conjunto de dados em grupos, procurando uma estrutura subjacente a tais dados. Esse tipo de análise é importante em muitas áreas, tais como biologia, medicina, marketing, visão computacional e em uma variedade de engenharias. Está relacionada também ao que se conhece como aprendizado não-supervisionado (unsupervised learning), sendo importante também no estudo de inteligência artificial. Mais informações podem ser encontradas em \cite{JainDubesClustering}.
+\item \textbf{Estatística de Hopkins:} 
+	A Estatística de Hopkins fornece um escore relacionado à qualidade do agrupamento. Ou seja, de posse dessa estatística podemos afirmar que um agrupamento está melhor do que outro. Essa característica é que torna possível seu uso nesse trabalho como árbitra capaz de escolher o melhor agrupamento.
+\item \textbf{Análise de Monte Carlo:} 
+	Análise de Monte Carlo é o nome que se dá a uma gama variada de processos em que amostras aleatórias são geradas a base a fim de obter uma informação sobre os dados reais que se deseja calcular. No caso específico desse trabalho, agrupamento, utilizamos a análise de Monte Carlo para calcular a estatística de Hopkins.
+\end{itemize}
+
+\section{SOLUÇÃO PROPOSTA}
+\label{solucao proposta}
+
+Esse trabalho recebe uma lista de pontos como entrada e procura definir agrupamentos para esses pontos utilizando-se da estatística de Hopkins associada à análise de Monte Carlo. O papel da análise de Monte Carlo consiste em gerar pontos aleatórios que serão capazes de fornecer informações sobre a base, informações essas que definirão o agrupamento. Essas informações serão utilizadas para calcular a estatística de Hopkins.
+
+A análise de Monte Carlo é por definição aleatória, então precisamos de uma estratégia para conseguir um bom resultado. Essa estratégia consiste nesse trabalho em realizar essa análise várias vezes, calculando a estatística de Hopkins em cada caso e escolhendo ao final o melhor agrupamento com base nesses dados.
+
+\subsection{Estruturas de dados}
+
+\subsubsection{pontos:} 
+
+A entrada do programa e estrutura básica é uma coleção de pontos. A forma escolhida para armazenar esses pontos foi através de um vetor de pontos. Mas cada ponto é na verdade ele mesmo um vetor, um vetor de doubles, pois os pontos podem têm um certo número de dimensões.
+\begin{algorithm}[h!]
+\begin{footnotesize}
+  
+	tipoponto double[num dimensoes] ponto\;
+	
+	tipoponto pontos[num pontos]\;
+	
+\caption{coleção de pontos}%
+\end{footnotesize}
+\end{algorithm}
+
+\subsubsection{tipo ressultado:} 
+
+Guarda as estruturas que serão impressas como saída do programa.
+\begin{algorithm}[h!]
+\begin{footnotesize}
+  
+	double minimo\;
+	double maximo\;
+	double media\;
+	double desvio padrao\;
+	
+\caption{tipo resultado}%
+\end{footnotesize}
+\end{algorithm}
+
+
+\subsection{Algoritmos}
+
+\subsubsection{calcula distancia}
+
+Calcula a distância euclidiana entre dois pontos. Tem complexidade $O(d)$, em que $d$ é o número de dimensões.
+\begin{algorithm}[h!]
+\begin{footnotesize}
+
+	distancia = 0\;
+	\For{$i=0$ até $num dimensoes$}{
+		distancia = distancia + $(ponto1[i]-ponto2[i])^2$\;
+	}
+	distancia = $\sqrt{distancia}$\;
+	retorna distancia\;
+
+
+\caption{double calcula distancia(tipoponto ponto1, tipoponto ponto2, int num dimensoes)}%
+\end{footnotesize}
+\end{algorithm}
+
+\subsubsection{passo1}
+
+Resolve o primeiro passo, que consiste nas seguintes operações:
+\begin{itemize}
+\item Gera pontos aleatórios, tantos quanto definidos pela opção -n (tamanho das amostras).
+\item Para cada um dos pontos aleatórios calcula a distância até o ponto mais próximo da base e soma essas menores distâncias em uma variável U.
+\end{itemize}
+Essa variável U é retornada pela função e utilizada posteriormente para calcula o escore de Hopkins.
+A complexidade do algoritmo é $O(n*s)$, em que $n$ é o número de pontos e $s$ é o tamanho da amostra.
+
+\begin{algorithm}[h!]
+\begin{footnotesize}
+	
+	Gera pontos aleatórios[tam amostras]\;
+	\For{$i=0$ até $tam amostras$}{
+		distancia tmp = $\infty$\;
+		\For{$j=0$ até $num pontos$}{
+			aux = distancia entre ponto aleatorio[i] e ponto da base[j]\;
+			\If{aux < distancia tmp}{
+				distancia tmp = aux\;
+			}\;
+		}
+		U = distancia tmp + U\;
+	}
+	retorna U\;
+
+
+\caption{passo1(int tam amostras, int num dimensoes, tipo ponto *pontos, int num pontos)}%
+\end{footnotesize}
+\end{algorithm}
+
+
+\subsubsection{passo2}
+
+Resolve o segundo passo, que consiste nas seguintes operações:
+\begin{itemize}
+\item Seleciona N pontos aleatórios da base de dados, onde N é definido por -n (tamanho das amostras).
+\item Para cada um dos pontos selecionados calcula a distância até o ponto mais próximo e soma essas menores distâncias em uma variável W.
+\end{itemize}
+Essa variável W é retornada pela função e utilizada posteriormente para calcula o escore de Hopkins.
+A complexidade do algoritmo é $O(n*s)$, em que $n$ é o número de pontos e $s$ é o tamanho da amostra.
+
+\begin{algorithm}[h!]
+\begin{footnotesize}
+	
+	\For{$i=0$ até $tam amostras$}{
+		distancia tmp = $\infty$\;
+		\For{$j=0$ até $num pontos$, com j <> indice aleatorio}{
+			aux = distancia entre ponto da base[indice aleatorio] e ponto da base[j]\;
+			\If{aux < distancia tmp}{
+				distancia tmp = aux\;
+			}\;
+		}
+		W = distancia tmp + W\;
+	}
+	retorna W\;
+
+
+\caption{passo2(int tam amostras, int num dimensoes, tipo ponto *pontos, int num pontos)}%
+\end{footnotesize}
+\end{algorithm}
+
+
+\section{IMPLEMENTAÇÃO}
+\label{implementacao}
+
+\subsection{Código}
+
+\subsubsection{Arquivos .c}
+
+\begin{itemize}
+\item \textbf{Main.c:} Arquivo principal do programa.
+\item \textbf{entrada.c:} Define as funções relacionadas a operações tais como tratamento dos argumentos de entrada e impressão dos elementos de saída.
+\item \textbf{monte carlo.c:} Define funções relacionadas ao método de Monte Carlo e ao cálculo da estatística de Hopkins.
+\end{itemize}
+
+\subsubsection{Arquivos .h}
+
+\begin{itemize}
+\item \textbf{entrada.h:}  Define cabeçalhos de funções relacionadas a operações de \textit{input}.
+\item \textbf{monte carlo.h:} Define as estruturas de dados e cabeçalhos de funções relacionadas à análise de Monte Carlo.
+
+\end{itemize}
+
+\subsection{Compilação}
+
+O programa deve ser compilado pelo compilador GCC através de um makefile ou do seguinte comando:
+
+\begin{footnotesize}
+\begin{verbatim} gcc -lm Main.c entrada.c monte_carlo.c -o executavel.out \end{verbatim}
+\end{footnotesize}
+
+\subsection{Execução}
+
+A execução do programa tem como parâmetros:
+\begin{itemize}
+\item O nome do arquivo de entrada que contém a coleção de pontos.
+\item Número de testes.
+\item Tamanho das amostras.
+\item O nome do arquivo de saída.
+\end{itemize}
+
+O comando para a execução do programa é da forma:
+
+\begin{footnotesize}
+\begin{verbatim} ./executavel.out -i <arquivo de entrada> -s <número de amostras> 
+-n <número de testes> -o <arquivo de saída>
+\end{verbatim}
+\end{footnotesize}
+
+\subsubsection{Formato da entrada}
+
+A primeira linha do arquivo traz dois números o número de pontos que o arquivo contém e o número de dimensões de cada ponto. Subseqüentemente, cada linha do arquivo traz um ponto, com as coordenadas de cada dimensão separadas por espaços.
+
+\subsubsection{Formato da saída}
+
+O programa possui uma saída tanto na saída padrão quanto no arquivo de saída. Na saída padrão temos a estatística de Hopkins para cada teste. Na saída padrão temos os dados globais, que são o menor valor, o maior, a média e o desvio padrão amostral no cálculo da estatística de Hopkins
+
+
+\section{CONCLUSÃO}
+\label{conclusao}
+
+Foi implementada a análise de Monte Carlo com sucesso, e a estatística de Hopkins também é computada corretamente. 
+
+O objetivo de explorar os métodos de alocação dinâmica também parecem ter sido alcançadas, uma vez que os pontos são alocados dinamicamente.
+
+
+Há ainda algumas melhorias que poderiam ser consideradas:
+\begin{itemize}
+\item Testes e análises;
+\item Tornar mais eficiente a pesquisa pelo ponto mais próximo.
+\end{itemize}
+\bibliographystyle{sbc}
+\bibliography{tp0}
+
+\end{document}
