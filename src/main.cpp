@@ -36,8 +36,11 @@ int main(int argc, char *argv[])
             if (result)
             {
                 if (driver.programa) driver.programa->Interpreta(Ctx);
-                else std::cerr << "Erro ao processar o código" << std::endl;
-				std::cout << std::endl;
+                else 
+				{
+					std::cerr << "Erro ao processar o código" << std::endl;
+					std::cout << std::endl;
+				}
             }
 
             readfile = true;
@@ -57,10 +60,14 @@ int main(int argc, char *argv[])
 
         if (result)
         {
-            if (driver.programa) driver.programa->Interpreta(Ctx);
+            if (driver.programa) 
+			{
+				driver.programa->Interpreta(Ctx);
+				delete driver.programa;
+				driver.programa = NULL;
+			}
             else std::cerr << "Erro ao processar o código" << std::endl;
 			std::cout << std::endl;
-			delete driver.programa;
         }
     }
 }

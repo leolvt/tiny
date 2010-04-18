@@ -117,9 +117,6 @@
 %type	<expBool>		exp_rel
 %type	<expBool>		boolean
 
-
-%left NEG     /* negation--unary minus */
-
 /* start symbol is named "start" */
 %start program
 
