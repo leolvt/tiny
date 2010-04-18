@@ -9,14 +9,14 @@ else
     while i <= n - a do 
       writeStr(" ");
       i:= i + 1;
-    endw
+    endw;
     i:= 1;
     while i <= 2 * a - 1 do
       writeStr("*");
       i:= i+1;
-    endw
+    endw;
     writeln;
     a:= a + 1;
-  endw
-endif
+  endw;
+endif;
 endp
