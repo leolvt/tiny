@@ -25,7 +25,7 @@ OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
 	   ${OBJDIR}/exp_booleana.o ${OBJDIR}/exp_relacional.o \
 	   ${OBJDIR}/comando_if.o ${OBJDIR}/comando_while.o
 
-ARCHIVE_FILES = src/ bin/ Makefile README
+ARCHIVE_FILES = src/ doc/ bin/ Makefile README
 ARCHIVE_NAME = tiny.tar.gz
 
 # =============
