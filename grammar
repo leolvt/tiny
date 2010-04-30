@@ -1,8 +1,26 @@
-#<programa> ::= <lista_comandos> "endp"
+<programa> ::= <cmd_global> <lista_procedimentos> "endp"
 
-#<lista_comandos> ::= <comando> ";"
-#<lista_comandos> ::= <comando> ";" <lista_comandos>
+<lista_procedimentos> ::= <lista_procedimentos> <procedimento>
+<lista_procedimentos> ::= <procedimento>
 
+<procedimento> ::=  "proc" <nome> "(" <lista_variaveis> ")" 
+					<cmd_local>
+					<lista_comandos> 
+					"endproc"
+
+<cmd_local> ::= "local" <lista_variaveis> ";"
+<cmd_local> ::= # Nada
+
+<cmd_global> ::= "global" <lista_variaveis> ";"
+<cmd_global> ::= # Nada
+
+<lista_variaveis> ::= <lista_variaveis> "," <variavel>
+<lista_variaveis> ::= <variavel>
+
+# <lista_comandos> ::= <comando> ";"
+# <lista_comandos> ::= <comando> ";" <lista_comandos>
+
+<commando> ::= "call" <nome> "(" <lista_param_reais> ")"
 #<comando> ::= "writeStr" "(" <string> ")"
 #<comando> ::= "writeVar" "(" <variavel> ")"
 #<comando> ::= "writeln"
@@ -20,10 +38,10 @@
 #<comando> ::= "for" <variavel> ":=" <exp_aritmetica> "downto" <exp_aritmetica> "do"
 #				  <lista_comandos>
 #			  "endfor"
-# <comando> ::= "while" <exp_booleana> "do"
+#<comando> ::= "while" <exp_booleana> "do"
 #			      <lista_comandos>
 #			  "end"
-# <comando> ::= "while" <exp_booleana> "do"
+#<comando> ::= "while" <exp_booleana> "do"
 #			      <lista_comandos>
 #			  "endw"
 #<comando> ::= "if" <exp_booleana> "then" <lista_comandos> "end"
@@ -32,6 +50,9 @@
 #<comando> ::= "if" <exp_booleana> "then" <lista_comandos> "endif"
 #<comando> ::= "if" <exp_booleana> "then" <lista_comandos> "else"
 #			      <lista_comandos> "endif"
+
+<lista_param_reais> ::= <lista_param_reais> "," <exp_aritmetica> 
+<lista_param_reais> ::= <exp_aritmetica>
 
 # <exp_booleana> ::= <exp_or>
 
@@ -74,7 +95,9 @@
 # <num> ::= ([0-9]+"."[0-9]*)|("."[0-9]+)
 # <variavel> ::= [a-zA-z]
 
-#<string> ::= ".*"
+# <nome> ::= <string>
+
+# <string> ::= ".*"
 
 ================================================================================
 
