@@ -51,8 +51,8 @@
 #<comando> ::= "if" <exp_booleana> "then" <lista_comandos> "else"
 #			      <lista_comandos> "endif"
 
-<lista_param_reais> ::= <lista_param_reais> "," <exp_aritmetica> 
-<lista_param_reais> ::= <exp_aritmetica>
+#<lista_param_reais> ::= <lista_param_reais> "," <exp_aritmetica> 
+#<lista_param_reais> ::= <exp_aritmetica>
 
 # <exp_booleana> ::= <exp_or>
 

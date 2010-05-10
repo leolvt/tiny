@@ -3,21 +3,22 @@
 
 #include <iostream>
 #include <string>
+#include "boolean.h"
 #include "comando.h"
-#include "lista_comandos.h"
-#include "comando_for.h"
-#include "comando_write.h"
-#include "comando_read.h"
 #include "comando_atribuicao.h"
+#include "comando_for.h"
+#include "comando_if.h"
+#include "comando_read.h"
+#include "comando_write.h"
+#include "comando_while.h"
 #include "expressao.h"
 #include "expressaoBool.h"
 #include "exp_aritmetica.h"
-#include "fator.h"
-#include "boolean.h"
 #include "exp_booleana.h"
 #include "exp_relacional.h"
-#include "comando_if.h"
-#include "comando_while.h"
+#include "fator.h"
+#include "lista_comandos.h"
+#include "lista_expressoes.h"
 
 %}
 
@@ -61,14 +62,15 @@
  /*** BEGIN TOKENS ***/
 
 %union {
-    char					charVal;
-    double					doubleVal;
-    bool					boolVal;
-	std::string			*	strVal;
-	class ListaComandos	*	listaVal;
-	class Expressao		*	expVal;
-	class ExpressaoBool	*	expBool;
-	class Comando		*	cmdVal;
+    char						charVal;
+    double						doubleVal;
+    bool						boolVal;
+	std::string				*	strVal;
+	class Comando			*	cmdVal;
+	class Expressao			*	expVal;
+	class ExpressaoBool		*	expBool;
+	class ListaComandos		*	listaCmdVal;
+	class ListaExpressoes	*	listaExpVal;
 }
 
 %token					FIM		0	"end of file"
@@ -90,19 +92,20 @@
 %token					DOWNTO		"downto"
 %token					DO			"do"
 %token					IF			"if"
-%token					THEN			"then"
-%token					ELSE			"else"
-%token					ENDIF			"endif"
-%token					WHILE			"while"
-%token					ENDW			"endw"
+%token					THEN		"then"
+%token					ELSE		"else"
+%token					ENDIF		"endif"
+%token					WHILE		"while"
+%token					ENDW		"endw"
 %token					END			"end of block"
-%token					ENDFOR			"endfor"
+%token					ENDFOR		"endfor"
 %token	<doubleVal> 	DOUBLE		"double"
 %token	<boolVal>		BOOL		"bool"
 %token	<strVal>		STRING		"string"
 %token	<charVal>		VARNAME		"variable name"
 
-%type	<listaVal>		lista_comandos
+%type	<listaCmdVal>	lista_comandos
+%type	<listaExpVal>	lista_expressoes
 %type	<cmdVal>		comando
 %type	<cmdVal>		comando_for
 %type	<cmdVal>		comando_if
@@ -143,6 +146,11 @@ program:  lista_comandos ENDP 		{ driver.programa = $1; }
 lista_comandos: comando ';'			{ $$ = new ListaComandos($1); }
 			  | lista_comandos comando ';' 
 									{ $$ = $1; $1->AdicionaComando($2); }
+;
+
+lista_expressoes: exp_arit			{ SS = new ListaExpressoes($1); }
+				| lista_expressoes ',' exp_arit
+									{ $$ = $1; $1->AdicionaExpressao($3); }
 ;
 
 comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
