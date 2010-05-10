@@ -14,8 +14,8 @@
 <cmd_global> ::= "global" <lista_variaveis> ";"
 <cmd_global> ::= # Nada
 
-<lista_variaveis> ::= <lista_variaveis> "," <variavel>
-<lista_variaveis> ::= <variavel>
+#<lista_variaveis> ::= <lista_variaveis> "," <variavel>
+#<lista_variaveis> ::= <variavel>
 
 # <lista_comandos> ::= <comando> ";"
 # <lista_comandos> ::= <comando> ";" <lista_comandos>

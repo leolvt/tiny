@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "boolean.h"
 #include "comando.h"
 #include "comando_atribuicao.h"
@@ -19,6 +20,8 @@
 #include "fator.h"
 #include "lista_comandos.h"
 #include "lista_expressoes.h"
+
+//class std::vector<char>;
 
 %}
 
