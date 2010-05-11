@@ -11,7 +11,8 @@ class ListaVariaveis
 		std::vector<char> lista_de_vars;
 
 	public:
-		void adicionaVar(char var_name);
+		ListaVariaveis(char c);
+		void AdicionaVar(char var_name);
 		char operator[] ( unsigned int n );
 };
 

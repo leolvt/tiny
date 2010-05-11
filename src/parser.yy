@@ -20,6 +20,7 @@
 #include "fator.h"
 #include "lista_comandos.h"
 #include "lista_expressoes.h"
+#include "lista_variaveis.h"
 
 //class std::vector<char>;
 
@@ -74,6 +75,7 @@
 	class ExpressaoBool		*	expBool;
 	class ListaComandos		*	listaCmdVal;
 	class ListaExpressoes	*	listaExpVal;
+	class ListaVariaveis	*	listaVar;
 }
 
 %token					FIM		0	"end of file"
@@ -109,6 +111,7 @@
 
 %type	<listaCmdVal>	lista_comandos
 %type	<listaExpVal>	lista_expressoes
+%type 	<listaVar>		lista_variaveis
 %type	<cmdVal>		comando
 %type	<cmdVal>		comando_for
 %type	<cmdVal>		comando_if
@@ -151,9 +154,14 @@ lista_comandos: comando ';'			{ $$ = new ListaComandos($1); }
 									{ $$ = $1; $1->AdicionaComando($2); }
 ;
 
-lista_expressoes: exp_arit			{ SS = new ListaExpressoes($1); }
+lista_expressoes: exp_arit			{ $$ = new ListaExpressoes($1); }
 				| lista_expressoes ',' exp_arit
 									{ $$ = $1; $1->AdicionaExpressao($3); }
+;
+
+lista_variaveis: VARNAME			{ $$ = new ListaVariaveis($1); }
+				| lista_variaveis ',' VARNAME
+									{ $$ = $1; $1->AdicionaVar($3); }
 ;
 
 comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
