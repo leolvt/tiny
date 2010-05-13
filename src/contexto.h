@@ -1,14 +1,14 @@
 #ifndef		TINY_CONTEXTO_H
 #define		TINY_CONTEXTO_H
 
-#include <vector>
+#include <map>
 
 namespace tiny {
 
 class Contexto 
 {
 	private:
-		std::vector<double> variaveis;
+		std::map<char,double> variaveis_globais;
 
 	public:
 		Contexto();
@@ -16,6 +16,7 @@ class Contexto
 		
 		double	obtemVariavel(char nomeVar);
 		void	defineVariavel(char nomeVar, double valor);
+		void	adicionaVariavel(char nomeVar, double valor);
 };
 
 } /* namespace tiny */

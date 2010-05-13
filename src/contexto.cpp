@@ -1,4 +1,4 @@
-#include <vector>
+#include <map>
 #include <cctype>
 #include <iostream>
 
@@ -8,11 +8,9 @@ namespace tiny {
 
 /* ========================================================================== */
 
-/* Construtor 
- * Inicia as 26 variáveis com valor nulo */
-Contexto::Contexto()
+/* Construtor */
+Contexto::Contexto() 
 {
-	this->variaveis.resize(26, 0);
 }
 
 /* ========================================================================== */
@@ -21,7 +19,7 @@ Contexto::Contexto()
  * Esvazia as variáveis */
 Contexto::~Contexto()
 {
-	this->variaveis.clear();
+	this->variaveis_globais.clear();
 }
 
 /* ========================================================================== */
@@ -32,11 +30,11 @@ double Contexto::obtemVariavel(char nomeVar )
 {
 	if ( isalpha(nomeVar) )
 	{
-		return this->variaveis[tolower(nomeVar) - 'a'];
+		return this->variaveis_globais[nomeVar];
 	}
 	else
 	{
-		std::cerr << "Variavel a ser Obtida é Inválida: " << nomeVar 
+		std::cerr << "Variavel a ser obtida é inválida: " << nomeVar 
 			<< std::endl;
 		return 0.0;
 	}
@@ -50,12 +48,36 @@ void Contexto::defineVariavel(char nomeVar, double valor)
 {
 	if ( isalpha(nomeVar) )
 	{
-		this->variaveis[ tolower(nomeVar) - 'a' ] = valor;
+		std::map<char,double>::iterator it;
+		it = variaveis_globais.find(nomeVar);
+		if ( it != variaveis_globais.end() )
+			this->variaveis_globais[nomeVar] = valor;
 	}
 	else
 	{
-		std::cerr << "Variavel a ser definida é Inválida: " << nomeVar 
+		std::cerr << "Variavel a ser definida é inválida: " << nomeVar 
 			<< std::endl;
+	}
+}
+
+/* ========================================================================== */
+
+void Contexto::adicionaVariavel(char nomeVar, double valor)
+{
+	if ( isalpha(nomeVar) )
+	{
+		bool success = variaveis_globais.insert( 
+				std::pair<char,double>(nomeVar,valor)
+		).second;
+
+		if ( !success )
+		{
+			std::cerr << "Variável já existe!" << std::endl;
+		}
+	} 
+	else 
+	{
+		std::cerr << "Erro!!!" << std::endl;
 	}
 }
 
