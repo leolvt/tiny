@@ -1,36 +1,40 @@
-#include "lista_variaveis.h"
+#include "comando_global.h"
 
 namespace tiny {
 
 /* ========================================================================== */
 
-ListaVariaveis::ListaVariaveis(char c)
+ComandoGlobal::ComandoGlobal()
 {
-	this->lista_de_vars.push_back(c);
+	lista = NULL;
 }
 
 /* ========================================================================== */
 
-void ListaVariaveis::adicionaVar(char var_name)
+ComandoGlobal::ComandoGlobal(ListaVariaveis * l)
 {
-	this->lista_de_vars.push_back(var_name);
+	lista = l;
 }
 
 /* ========================================================================== */
 
-char ListaVariaveis::operator[] ( unsigned int n )
+ComandoGlobal::~ComandoGlobal()
 {
-	return lista_de_vars[n];
+	if (lista != NULL) delete lista;
 }
 
 /* ========================================================================== */
 
-int ListaVariaveis::tamanho()
+void ComandoGlobal::Interpreta( Contexto& C )
 {
-	return this->lista_de_vars.size();
+	if (lista == NULL) return;
+
+	int i;
+	for ( i = 0 ; i < lista->tamanho() ; i++ )
+		i++;
+//		C.adicionaVar( lista[i] , 0.0);
 }
 
 /* ========================================================================== */
 
 } /* namespace tiny */
-

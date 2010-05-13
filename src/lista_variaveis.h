@@ -12,8 +12,9 @@ class ListaVariaveis
 
 	public:
 		ListaVariaveis(char c);
-		void AdicionaVar(char var_name);
+		void adicionaVar(char var_name);
 		char operator[] ( unsigned int n );
+		int tamanho();
 };
 
 } /* namespace tiny */

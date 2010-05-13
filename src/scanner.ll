@@ -89,6 +89,8 @@ E	[Ee][+-]?{D}+
 "endif"		{ return token::ENDIF; }
 "while"		{ return token::WHILE; }
 "endw"		{ return token::ENDW; }
+"global"	{ return token::GLOBAL; }
+"call"		{ return token::CALL; }
 
 
  /* Floating Point Number */
@@ -107,6 +109,12 @@ E	[Ee][+-]?{D}+
 "\""([^"\""])*"\"" {
 	yylval->strVal = new std::string(yytext);
 	return token::STRING;
+}
+
+ /* Identifiers */
+L(L|D)+	{
+	yylval->strVal = new std::string(yytext);
+	return token::ID;
 }
 
  /* Variables */

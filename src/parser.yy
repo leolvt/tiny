@@ -8,6 +8,7 @@
 #include "comando.h"
 #include "comando_atribuicao.h"
 #include "comando_for.h"
+#include "comando_global.h"
 #include "comando_if.h"
 #include "comando_read.h"
 #include "comando_write.h"
@@ -85,8 +86,8 @@
 %token					WRITEVAR	"writeVar"
 %token					WRITELN		"writeln"
 %token					READ		"read"
-%token					OR			"or operator"
 %token					AND			"and operator"
+%token					OR			"or operator"
 %token					NOT			"not operator"
 %token					GTE			">="
 %token					LTE			"<="
@@ -104,16 +105,21 @@
 %token					ENDW		"endw"
 %token					END			"end of block"
 %token					ENDFOR		"endfor"
+%token					GLOBAL		"global declaration"
+%token					CALL		"function call"
 %token	<doubleVal> 	DOUBLE		"double"
 %token	<boolVal>		BOOL		"bool"
+%token	<strVal>		ID			"identifier"
 %token	<strVal>		STRING		"string"
 %token	<charVal>		VARNAME		"variable name"
 
 %type	<listaCmdVal>	lista_comandos
 %type	<listaExpVal>	lista_expressoes
+%type	<listaExpVal>	lista_param_reais
 %type 	<listaVar>		lista_variaveis
 %type	<cmdVal>		comando
 %type	<cmdVal>		comando_for
+%type	<cmdVal>		comando_global
 %type	<cmdVal>		comando_if
 %type	<cmdVal>		comando_while
 %type	<expVal>		exp_arit
@@ -161,8 +167,11 @@ lista_expressoes: exp_arit			{ $$ = new ListaExpressoes($1); }
 
 lista_variaveis: VARNAME			{ $$ = new ListaVariaveis($1); }
 				| lista_variaveis ',' VARNAME
-									{ $$ = $1; $1->AdicionaVar($3); }
+									{ $$ = $1; $1->adicionaVar($3); }
 ;
+
+lista_param_reais: /* empty */		{ $$ = NULL; }
+				 | lista_expressoes { $$ = $1; }
 
 comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | WRITEVAR '(' VARNAME ')'	{ $$ = new ComandoWrite(writeVar,NULL,$3); }
@@ -170,9 +179,14 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | READ '(' VARNAME ')'		{ $$ = new ComandoRead($3); }
 	   | VARNAME ATRIBUI exp_arit	{ $$ = new ComandoAtribuicao($1, $3); }
 	   | comando_for				{ $$ = $1; }
-	   | comando_if			{ $$ = $1; }
-	   | comando_while		{ $$ = $1; }
+	   | comando_if					{ $$ = $1; }
+	   | comando_while				{ $$ = $1; }
+	   | comando_global				{ $$ = $1; }
+	   | CALL ID '(' lista_param_reais ')'	{ $$ = NULL; }
 ;
+
+comando_global: /* empty */			{ $$ = new ComandoGlobal(); }
+			  | GLOBAL lista_variaveis	{ $$ = new ComandoGlobal($2); }
 
 comando_for: FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos END 
 			{ $$ = new ComandoFor(up, $2, $4, $6, $8); }

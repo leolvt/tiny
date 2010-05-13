@@ -11,8 +11,8 @@
 <cmd_local> ::= "local" <lista_variaveis> ";"
 <cmd_local> ::= # Nada
 
-<cmd_global> ::= "global" <lista_variaveis> ";"
-<cmd_global> ::= # Nada
+#<cmd_global> ::= "global" <lista_variaveis> ";"
+#<cmd_global> ::= # Nada
 
 #<lista_variaveis> ::= <lista_variaveis> "," <variavel>
 #<lista_variaveis> ::= <variavel>

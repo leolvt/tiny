@@ -24,7 +24,8 @@ OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
 	   ${OBJDIR}/comando_atribuicao.o ${OBJDIR}/boolean.o \
 	   ${OBJDIR}/exp_booleana.o ${OBJDIR}/exp_relacional.o \
 	   ${OBJDIR}/comando_if.o ${OBJDIR}/comando_while.o \
-	   ${OBJDIR}/lista_expressoes.o ${OBJDIR}/lista_variaveis.o
+	   ${OBJDIR}/lista_expressoes.o ${OBJDIR}/lista_variaveis.o \
+	   ${OBJDIR}/comando_global.o
 
 ARCHIVE_FILES = src/ doc/ bin/ Makefile README
 ARCHIVE_NAME = tiny.tar.gz
@@ -89,6 +90,10 @@ ${OBJDIR}/lista_expressoes.o: src/lista_expressoes.cpp src/lista_expressoes.h
 
 ${OBJDIR}/lista_comandos.o: src/lista_comandos.cpp src/lista_comandos.h
 	@echo "Compilando Modulo Lista de Comandos"
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+
+${OBJDIR}/comando_global.o: src/comando_global.cpp src/comando_global.h
+	@echo "Compilando Modulo Comando Global"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/comando_for.o: src/comando_for.cpp src/comando_for.h
