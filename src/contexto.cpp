@@ -7,11 +7,25 @@
 namespace tiny {
 
 /* ========================================================================== */
+	
+Erro::Erro(std::string msg)
+{
+	this->msg = msg;
+}
+
+/* ========================================================================== */
+
+std::string Erro::obtemMsg()
+{
+	return this->msg;
+}
+
+/* ========================================================================== */
 
 /* Construtor */
 Contexto::Contexto() 
 {
-}
+} 
 
 /* ========================================================================== */
 
@@ -44,14 +58,10 @@ double Contexto::obtemVariavel(char nomeVar )
 	    it = variaveis_globais.find(nomeVar);
 		if ( it != variaveis_globais.end() ) 
 			return it->second;
-		else throw std::string("Erro!");
+		else throw Erro("\nVariável inexistente: "+nomeVar);
 	}
 	else
-	{
-		std::cerr << "Variavel a ser obtida é inválida: " << nomeVar 
-			<< std::endl;
-		return 0.0;
-	}
+		throw Erro("\nVariável inválida: "+nomeVar);
 }
 
 /* ========================================================================== */
@@ -77,13 +87,10 @@ void Contexto::defineVariavel(char nomeVar, double valor)
 		if ( variaveis_globais.find(nomeVar) != variaveis_globais.end() )
 			variaveis_globais[nomeVar] = valor;
 		else 
-			throw std::string("Erro!!");
+			throw Erro("\nVariável inexistente: "+nomeVar);
 	}
 	else
-	{
-		std::cerr << "Variavel a ser definida é inválida: " << nomeVar 
-			<< std::endl;
-	}
+		throw Erro("\nVariável inválida: "+nomeVar);
 }
 
 /* ========================================================================== */
@@ -100,17 +107,15 @@ void Contexto::adicionaVariavel(char nomeVar, double valor)
 		{
 			OK = pilha_chamada.top().insert(new_var).second;
 			if (OK) return;
-			else throw std::string("Erro!"); 
+			else throw Erro("\nVariável já existe: "+nomeVar); 
 		}
 
 		/* Segunda Tentativa: Variáveis Globais */
 		OK = variaveis_globais.insert(new_var).second;
-		if ( !OK ) throw std::string("Erro!");
+		if ( !OK ) throw Erro("\nVariável global já existe: "+nomeVar);
 	} 
 	else 
-	{
-		std::cerr << "Erro!!!" << std::endl;
-	}
+		throw Erro("\nVariável inválida: "+nomeVar);
 }
 
 /* ========================================================================== */

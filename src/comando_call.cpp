@@ -23,7 +23,7 @@ ComandoCall::~ComandoCall()
 void ComandoCall::Interpreta( Contexto& C )
 {
 	if ( (!identificador) || (!param_reais) )
-		throw std::string("Erro!");
+		throw Erro("\nUnexpected NULL pointer.");
 
 	/* Obtém Procedimento */
 //	Procedimento P = C.obtemProcedimento(*identificador);
@@ -32,7 +32,7 @@ void ComandoCall::Interpreta( Contexto& C )
 //	ListaVariaveis params = P.obtemParametros();
 //	std::vector<double> params_reais = param_reais->Avalia(C);
 //	if ( params.tamanho() != param_reais.tamanho() )
-//		throw std::string("Erro!");
+//		throw Erro("\nProcedimento inválido: número de parâmetros errado");
 //	
 //	/* Atribui parâmetros */
 //	map<char,double> vars;
