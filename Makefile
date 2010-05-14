@@ -25,7 +25,7 @@ OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
 	   ${OBJDIR}/exp_booleana.o ${OBJDIR}/exp_relacional.o \
 	   ${OBJDIR}/comando_if.o ${OBJDIR}/comando_while.o \
 	   ${OBJDIR}/lista_expressoes.o ${OBJDIR}/lista_variaveis.o \
-	   ${OBJDIR}/comando_global.o
+	   ${OBJDIR}/comando_global.o ${OBJDIR}/registro_ativacao.o
 
 ARCHIVE_FILES = src/ doc/ bin/ Makefile README
 ARCHIVE_NAME = tiny.tar.gz
@@ -78,6 +78,10 @@ ${OBJDIR}/main.o: src/main.cpp
 
 ${OBJDIR}/contexto.o: src/contexto.cpp src/contexto.h
 	@echo "Compilando Modulo Contexto"
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+
+${OBJDIR}/registro_ativacao.o: src/registro_ativacao.cpp src/registro_ativacao.h
+	@echo "Compilando Modulo Registro de Ativação"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/lista_variaveis.o: src/lista_variaveis.cpp src/lista_variaveis.h

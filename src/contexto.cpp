@@ -30,7 +30,21 @@ double Contexto::obtemVariavel(char nomeVar )
 {
 	if ( isalpha(nomeVar) )
 	{
-		return this->variaveis_globais[nomeVar];
+		std::map<char,double>::iterator it;
+
+		/* Primeira Tentativa: Variável Local */
+		if ( !pilha_chamada.empty() )
+		{
+			it = pilha_chamada.top().obtemVars().find(nomeVar);
+			if (it != pilha_chamada.top().obtemVars().end()) 
+				return it->second;
+		}
+		
+		/* Segunda Tentativa: Variável Global */
+	    it = variaveis_globais.find(nomeVar);
+		if ( it != variaveis_globais.end() ) 
+			return it->second;
+		else throw std::string("Erro!");
 	}
 	else
 	{
@@ -48,10 +62,22 @@ void Contexto::defineVariavel(char nomeVar, double valor)
 {
 	if ( isalpha(nomeVar) )
 	{
-		std::map<char,double>::iterator it;
-		it = variaveis_globais.find(nomeVar);
-		if ( it != variaveis_globais.end() )
-			this->variaveis_globais[nomeVar] = valor;
+		/* Primeira Tentativa: Variáveis locais */
+		if ( !pilha_chamada.empty() )
+		{
+			std::map<char,double>& vars = pilha_chamada.top().obtemVars();
+			if ( vars.find(nomeVar) != vars.end() )
+			{
+				vars[nomeVar] = valor;
+				return;
+			}
+		}
+		
+		/* Segunda Tentativa: Variáveis Globais */
+		if ( variaveis_globais.find(nomeVar) != variaveis_globais.end() )
+			variaveis_globais[nomeVar] = valor;
+		else 
+			throw std::string("Erro!!");
 	}
 	else
 	{
@@ -79,6 +105,20 @@ void Contexto::adicionaVariavel(char nomeVar, double valor)
 	{
 		std::cerr << "Erro!!!" << std::endl;
 	}
+}
+
+/* ========================================================================== */
+
+void Contexto::adicionaRA(RegistroAtivacao RA)
+{
+	pilha_chamada.push(RA);
+}
+
+/* ========================================================================== */
+
+void Contexto::removeRA()
+{
+	pilha_chamada.pop();
 }
 
 /* ========================================================================== */

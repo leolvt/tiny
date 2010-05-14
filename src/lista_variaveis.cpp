@@ -20,7 +20,7 @@ void ListaVariaveis::adicionaVar(char var_name)
 
 char ListaVariaveis::operator[] ( unsigned int n )
 {
-	return lista_de_vars[n];
+	return lista_de_vars.at(n);
 }
 
 /* ========================================================================== */
