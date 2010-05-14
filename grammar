@@ -20,7 +20,7 @@
 # <lista_comandos> ::= <comando> ";"
 # <lista_comandos> ::= <comando> ";" <lista_comandos>
 
-<commando> ::= "call" <nome> "(" <lista_param_reais> ")"
+#<commando> ::= "call" <nome> "(" <lista_param_reais> ")"
 #<comando> ::= "writeStr" "(" <string> ")"
 #<comando> ::= "writeVar" "(" <variavel> ")"
 #<comando> ::= "writeln"

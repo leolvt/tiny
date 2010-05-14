@@ -8,6 +8,7 @@
 #include "comando.h"
 #include "comando_atribuicao.h"
 #include "comando_for.h"
+#include "comando_call.h"
 #include "comando_global.h"
 #include "comando_if.h"
 #include "comando_read.h"
@@ -118,6 +119,7 @@
 %type	<listaExpVal>	lista_param_reais
 %type 	<listaVar>		lista_variaveis
 %type	<cmdVal>		comando
+%type	<cmdVal>		comando_call
 %type	<cmdVal>		comando_for
 %type	<cmdVal>		comando_global
 %type	<cmdVal>		comando_if
@@ -182,10 +184,13 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | comando_if					{ $$ = $1; }
 	   | comando_while				{ $$ = $1; }
 	   | comando_global				{ $$ = $1; }
-	   | CALL ID '(' lista_param_reais ')'	{ $$ = NULL; }
+	   | comando_call				{ $$ = $1; }
 ;
 
-comando_global: /* empty */			{ $$ = new ComandoGlobal(); }
+comando_call: CALL ID '(' lista_param_reais ')'
+			{ $$ = new ComandoCall($2, $4); }
+
+comando_global: /* empty */				{ $$ = new ComandoGlobal(); }
 			  | GLOBAL lista_variaveis	{ $$ = new ComandoGlobal($2); }
 
 comando_for: FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos END 

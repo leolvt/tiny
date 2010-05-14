@@ -31,8 +31,7 @@ void ComandoGlobal::Interpreta( Contexto& C )
 
 	int i;
 	for ( i = 0 ; i < lista->tamanho() ; i++ )
-		i++;
-//		C.adicionaVar( lista[i] , 0.0);
+		C.adicionaVariavel( (*lista)[i] , 0.0);
 }
 
 /* ========================================================================== */

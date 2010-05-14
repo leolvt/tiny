@@ -25,7 +25,7 @@ OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
 	   ${OBJDIR}/exp_booleana.o ${OBJDIR}/exp_relacional.o \
 	   ${OBJDIR}/comando_if.o ${OBJDIR}/comando_while.o \
 	   ${OBJDIR}/lista_expressoes.o ${OBJDIR}/lista_variaveis.o \
-	   ${OBJDIR}/comando_global.o ${OBJDIR}/registro_ativacao.o
+	   ${OBJDIR}/comando_global.o ${OBJDIR}/comando_call.o
 
 ARCHIVE_FILES = src/ doc/ bin/ Makefile README
 ARCHIVE_NAME = tiny.tar.gz
@@ -80,10 +80,6 @@ ${OBJDIR}/contexto.o: src/contexto.cpp src/contexto.h
 	@echo "Compilando Modulo Contexto"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
-${OBJDIR}/registro_ativacao.o: src/registro_ativacao.cpp src/registro_ativacao.h
-	@echo "Compilando Modulo Registro de Ativação"
-	@${CXX} ${CXXFLAGS} -c $< -o $@
-
 ${OBJDIR}/lista_variaveis.o: src/lista_variaveis.cpp src/lista_variaveis.h
 	@echo "Compilando Modulo Lista de Variáveis"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
@@ -98,6 +94,10 @@ ${OBJDIR}/lista_comandos.o: src/lista_comandos.cpp src/lista_comandos.h
 
 ${OBJDIR}/comando_global.o: src/comando_global.cpp src/comando_global.h
 	@echo "Compilando Modulo Comando Global"
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+
+${OBJDIR}/comando_call.o: src/comando_call.cpp src/comando_call.h
+	@echo "Compilando Modulo Comando Call"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/comando_for.o: src/comando_for.cpp src/comando_for.h
@@ -129,7 +129,7 @@ ${OBJDIR}/fator.o: src/fator.cpp src/fator.h
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 	
 ${OBJDIR}/boolean.o: src/boolean.cpp src/boolean.h 
-	@echo "Compilando Modulo boolean"
+	@echo "Compilando Modulo Boolean"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/exp_aritmetica.o: src/exp_aritmetica.cpp src/exp_aritmetica.h

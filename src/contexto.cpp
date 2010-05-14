@@ -35,8 +35,8 @@ double Contexto::obtemVariavel(char nomeVar )
 		/* Primeira Tentativa: Variável Local */
 		if ( !pilha_chamada.empty() )
 		{
-			it = pilha_chamada.top().obtemVars().find(nomeVar);
-			if (it != pilha_chamada.top().obtemVars().end()) 
+			it = pilha_chamada.top().find(nomeVar);
+			if (it != pilha_chamada.top().end()) 
 				return it->second;
 		}
 		
@@ -65,7 +65,7 @@ void Contexto::defineVariavel(char nomeVar, double valor)
 		/* Primeira Tentativa: Variáveis locais */
 		if ( !pilha_chamada.empty() )
 		{
-			std::map<char,double>& vars = pilha_chamada.top().obtemVars();
+			std::map<char,double>& vars = pilha_chamada.top();
 			if ( vars.find(nomeVar) != vars.end() )
 			{
 				vars[nomeVar] = valor;
@@ -92,14 +92,20 @@ void Contexto::adicionaVariavel(char nomeVar, double valor)
 {
 	if ( isalpha(nomeVar) )
 	{
-		bool success = variaveis_globais.insert( 
-				std::pair<char,double>(nomeVar,valor)
-		).second;
+		std::pair<char,double>  new_var(nomeVar,valor);
+		bool OK = false;
 
-		if ( !success )
+		/* Primeira Tentativa: Variáveis Locais */
+		if ( !pilha_chamada.empty() )
 		{
-			std::cerr << "Variável já existe!" << std::endl;
+			OK = pilha_chamada.top().insert(new_var).second;
+			if (OK) return;
+			else throw std::string("Erro!"); 
 		}
+
+		/* Segunda Tentativa: Variáveis Globais */
+		OK = variaveis_globais.insert(new_var).second;
+		if ( !OK ) throw std::string("Erro!");
 	} 
 	else 
 	{
@@ -109,9 +115,9 @@ void Contexto::adicionaVariavel(char nomeVar, double valor)
 
 /* ========================================================================== */
 
-void Contexto::adicionaRA(RegistroAtivacao RA)
+void Contexto::adicionaRA(Variaveis v)
 {
-	pilha_chamada.push(RA);
+	pilha_chamada.push(v);
 }
 
 /* ========================================================================== */

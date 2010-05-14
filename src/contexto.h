@@ -3,15 +3,16 @@
 
 #include <map>
 #include <stack>
-#include "registro_ativacao.h"
 
 namespace tiny {
+
+typedef std::map<char,double> Variaveis;
 
 class Contexto 
 {
 	private:
 		std::map<char,double> variaveis_globais;
-		std::stack<RegistroAtivacao> pilha_chamada;
+		std::stack<Variaveis> pilha_chamada;
 
 	public:
 		Contexto();
@@ -20,7 +21,7 @@ class Contexto
 		double obtemVariavel(char nomeVar);
 		void defineVariavel(char nomeVar, double valor);
 		void adicionaVariavel(char nomeVar, double valor);
-		void adicionaRA(RegistroAtivacao RA);
+		void adicionaRA(Variaveis v);
 		void removeRA();
 };
 
