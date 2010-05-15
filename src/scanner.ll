@@ -89,6 +89,7 @@ E	[Ee][+-]?{D}+
 "endif"		{ return token::ENDIF; }
 "while"		{ return token::WHILE; }
 "endw"		{ return token::ENDW; }
+"local"		{ return token::LOCAL; }
 "global"	{ return token::GLOBAL; }
 "call"		{ return token::CALL; }
 

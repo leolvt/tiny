@@ -107,6 +107,7 @@
 %token					END			"end of block"
 %token					ENDFOR		"endfor"
 %token					GLOBAL		"global declaration"
+%token					LOCAL		"local declaration"
 %token					CALL		"function call"
 %token	<doubleVal> 	DOUBLE		"double"
 %token	<boolVal>		BOOL		"bool"
@@ -121,6 +122,7 @@
 %type	<cmdVal>		comando
 %type	<cmdVal>		comando_call
 %type	<cmdVal>		comando_for
+%type	<cmdVal>		comando_local
 %type	<cmdVal>		comando_global
 %type	<cmdVal>		comando_if
 %type	<cmdVal>		comando_while
@@ -174,6 +176,7 @@ lista_variaveis: VARNAME			{ $$ = new ListaVariaveis($1); }
 
 lista_param_reais: /* empty */		{ $$ = NULL; }
 				 | lista_expressoes { $$ = $1; }
+;
 
 comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | WRITEVAR '(' VARNAME ')'	{ $$ = new ComandoWrite(writeVar,NULL,$3); }
@@ -189,9 +192,15 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 
 comando_call: CALL ID '(' lista_param_reais ')'
 			{ $$ = new ComandoCall($2, $4); }
+;
+
+comando_local: /* empty */				{ $$ = new ComandoLocal(); }
+			  | LOCAL lista_variaveis	{ $$ = new ComandoLocal($2); }
+;
 
 comando_global: /* empty */				{ $$ = new ComandoGlobal(); }
 			  | GLOBAL lista_variaveis	{ $$ = new ComandoGlobal($2); }
+;
 
 comando_for: FOR VARNAME ATRIBUI exp_arit TO exp_arit DO lista_comandos END 
 			{ $$ = new ComandoFor(up, $2, $4, $6, $8); }

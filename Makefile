@@ -25,7 +25,8 @@ OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
 	   ${OBJDIR}/exp_booleana.o ${OBJDIR}/exp_relacional.o \
 	   ${OBJDIR}/comando_if.o ${OBJDIR}/comando_while.o \
 	   ${OBJDIR}/lista_expressoes.o ${OBJDIR}/lista_variaveis.o \
-	   ${OBJDIR}/comando_global.o ${OBJDIR}/comando_call.o
+	   ${OBJDIR}/comando_global.o ${OBJDIR}/comando_call.o \
+	   ${OBJDIR}/comando_local.o
 
 ARCHIVE_FILES = src/ doc/ bin/ Makefile README
 ARCHIVE_NAME = tiny.tar.gz
@@ -155,6 +156,10 @@ ${OBJDIR}/scanner.o: src/scanner.cpp src/scanner.h src/parser.cpp
 ${OBJDIR}/parser.o: src/parser.cpp src/parser.h
 	@echo "Compilando Parser"
 	@${CXX} ${CXXFLAGS} -Wno-parentheses -c $< -o $@
+
+${OBJDIR}/comando_local.o: src/comando_local.cpp src/comando_local.h 
+	@echo "Compilando Modulo Comando Local"
+	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 src/parser.cpp: src/parser.yy
 	@echo "Gerando Parser"
