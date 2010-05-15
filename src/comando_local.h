@@ -19,7 +19,7 @@ class ComandoLocal: public Comando {
 
 		void Interpreta( Contexto& C );
 
-}
+};
 
 } /* namespace tiny */
 

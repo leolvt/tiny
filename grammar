@@ -3,7 +3,7 @@
 <lista_procedimentos> ::= <lista_procedimentos> <procedimento>
 <lista_procedimentos> ::= <procedimento>
 
-<procedimento> ::=  "proc" <nome> "(" <lista_variaveis> ")" 
+# <procedimento> ::=  "proc" <nome> "(" <lista_variaveis> ")" 
 					<cmd_local>
 					<lista_comandos> 
 					"endproc"

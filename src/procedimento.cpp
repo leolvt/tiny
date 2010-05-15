@@ -29,10 +29,28 @@ Procedimento::~Procedimento() {
 
 /* ========================================================================== */
 
-Procedimento::Interpreta(Contexto& C) {
-	
-	
-	
+std::string obtemNome() {
+	return this->nome;
 }
+
+/* ========================================================================== */
+
+ListaVariaveis * obtemParametros() {
+	return this->parametros;
+}
+
+/* ========================================================================== */
+
+ComandoLocal * obtemLocal() {
+	return this->cmd_local;
+}
+
+/* ========================================================================== */
+
+ListaComandos * obtemComandos() {
+	return this->lista_cmds;
+}
+
+/* ========================================================================== */
 
 } /* namespace tiny */

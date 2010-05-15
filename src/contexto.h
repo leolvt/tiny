@@ -22,7 +22,7 @@ typedef std::map<char,double> Variaveis;
 class Contexto 
 {
 	private:
-		std::map<char,double> variaveis_globais;
+		Variaveis variaveis_globais;
 		std::stack<Variaveis> pilha_chamada;
 
 	public:

@@ -78,6 +78,7 @@
 	class ListaComandos		*	listaCmdVal;
 	class ListaExpressoes	*	listaExpVal;
 	class ListaVariaveis	*	listaVar;
+	class Procedimento	*	proced;
 }
 
 %token					FIM		0	"end of file"
@@ -121,6 +122,7 @@
 %type	<listaExpVal>	lista_expressoes
 %type	<listaExpVal>	lista_param_reais
 %type 	<listaVar>		lista_variaveis
+%type	<proced>		procedimento
 %type	<cmdVal>		comando
 %type	<cmdVal>		comando_call
 %type	<cmdVal>		comando_for

@@ -23,9 +23,10 @@ class Procedimento {
 		~Procedimento();
 		std::string obtemNome();
 		ListaVariaveis * obtemParametros();
-		ComandoLocal * 
-}
+		ComandoLocal * obtemLocal();
+		ListaComandos * obtemComandos();
+};
 
 } /* namespace tiny */
 
-#endif		/* TINY_PROCEDIMENTO_H :*/
+#endif		/* TINY_PROCEDIMENTO_H */
