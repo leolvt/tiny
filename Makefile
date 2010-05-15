@@ -96,6 +96,10 @@ ${OBJDIR}/lista_comandos.o: src/lista_comandos.cpp src/lista_comandos.h
 ${OBJDIR}/comando_global.o: src/comando_global.cpp src/comando_global.h
 	@echo "Compilando Modulo Comando Global"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
+	
+${OBJDIR}/comando_local.o: src/comando_local.cpp src/comando_local.h 
+	@echo "Compilando Modulo Comando Local"
+	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 ${OBJDIR}/comando_call.o: src/comando_call.cpp src/comando_call.h
 	@echo "Compilando Modulo Comando Call"
@@ -156,10 +160,6 @@ ${OBJDIR}/scanner.o: src/scanner.cpp src/scanner.h src/parser.cpp
 ${OBJDIR}/parser.o: src/parser.cpp src/parser.h
 	@echo "Compilando Parser"
 	@${CXX} ${CXXFLAGS} -Wno-parentheses -c $< -o $@
-
-${OBJDIR}/comando_local.o: src/comando_local.cpp src/comando_local.h 
-	@echo "Compilando Modulo Comando Local"
-	@${CXX} ${CXXFLAGS} -c $< -o $@
 
 src/parser.cpp: src/parser.yy
 	@echo "Gerando Parser"

@@ -108,6 +108,8 @@
 %token					ENDFOR		"endfor"
 %token					GLOBAL		"global declaration"
 %token					LOCAL		"local declaration"
+%token					PROC		"proc"
+%token					ENDPROC		"endproc"
 %token					CALL		"function call"
 %token	<doubleVal> 	DOUBLE		"double"
 %token	<boolVal>		BOOL		"bool"
@@ -157,6 +159,10 @@
 %% /*** Grammar Rules ***/
 
 program:  lista_comandos ENDP 		{ driver.programa = $1; }
+;
+
+procedimento:	PROC ID '(' lista_variaveis ')' comando_local	lista_comandos	ENDPROC
+						{ $$ = new Procedimento($2, $4, $6, $7); }
 ;
 
 lista_comandos: comando ';'			{ $$ = new ListaComandos($1); }

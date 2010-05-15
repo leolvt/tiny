@@ -8,8 +8,8 @@
 					<lista_comandos> 
 					"endproc"
 
-<cmd_local> ::= "local" <lista_variaveis> ";"
-<cmd_local> ::= # Nada
+# <cmd_local> ::= "local" <lista_variaveis> ";"
+# <cmd_local> ::= # Nada
 
 #<cmd_global> ::= "global" <lista_variaveis> ";"
 #<cmd_global> ::= # Nada

@@ -91,6 +91,8 @@ E	[Ee][+-]?{D}+
 "endw"		{ return token::ENDW; }
 "local"		{ return token::LOCAL; }
 "global"	{ return token::GLOBAL; }
+"proc"		{ return token::PROC; }
+"endproc"	{ return token::ENDPROC; }
 "call"		{ return token::CALL; }
 
 
