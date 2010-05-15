@@ -32,7 +32,7 @@ class Contexto
 		double obtemVariavel(char nomeVar);
 		void defineVariavel(char nomeVar, double valor);
 		void adicionaVariavel(char nomeVar, double valor);
-		void adicionaRA(Variaveis v);
+		void adicionaRA();
 		void removeRA();
 };
 

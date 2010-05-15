@@ -75,7 +75,7 @@ void Contexto::defineVariavel(char nomeVar, double valor)
 		/* Primeira Tentativa: Variáveis locais */
 		if ( !pilha_chamada.empty() )
 		{
-			std::map<char,double>& vars = pilha_chamada.top();
+			Variaveis& vars = pilha_chamada.top();
 			if ( vars.find(nomeVar) != vars.end() )
 			{
 				vars[nomeVar] = valor;
@@ -120,8 +120,9 @@ void Contexto::adicionaVariavel(char nomeVar, double valor)
 
 /* ========================================================================== */
 
-void Contexto::adicionaRA(Variaveis v)
+void Contexto::adicionaRA()
 {
+	Variaveis v;
 	pilha_chamada.push(v);
 }
 

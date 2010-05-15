@@ -34,14 +34,13 @@ void ComandoCall::Interpreta( Contexto& C )
 //	if ( params.tamanho() != param_reais.tamanho() )
 //		throw Erro("\nProcedimento inválido: número de parâmetros errado");
 //	
-//	/* Atribui parâmetros */
-//	map<char,double> vars;
+//	/* Adiciona novo Registro de Ativação */
+//	C.adicionaRA();
+//	
+//	/* Atribui parâmetros e adiciona as variáveis no RA */
 //	int i;
 //	for (i = 0; i < params.tamanho() ; i++)
-//		vars.insert( std::pair<char,double>(params[i],params_reais[i]) );
-//	
-//	/* Adiciona Variáveis na Pilha de Ativação */
-//	C.adicionaRA(vars);
+//		C.adicionaVariavel(params[i], params_reais[i]);
 //
 //	/* Executa Procedimento */
 //	ListaComandos cmds = P.obtemComandos();
