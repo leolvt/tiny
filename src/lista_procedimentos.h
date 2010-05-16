@@ -8,7 +8,6 @@
 
 namespace tiny {
 
-typedef std::map<std::string, Procedimento *> Procedimentos;
 
 class ListaProcedimentos {
 	
@@ -20,7 +19,6 @@ class ListaProcedimentos {
 		ListaProcedimentos(ComandoGlobal * global, Procedimento * P);
 		~ListaProcedimentos();
 		void AdicionaProcedimento(Procedimento * P);
-		Procedimento * obtemProcedimento(std::string nome_procedimento);
 		void Interpreta(Contexto& C);
 		
 };

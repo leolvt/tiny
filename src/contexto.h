@@ -19,11 +19,12 @@ class Erro
 };
 
 typedef std::map<char,double> Variaveis;
+typedef std::map<std::string, Procedimento *> Procedimentos;
 
 class Contexto 
 {
 	private:
-		ListaProcedimentos * procedimentos_do_prog;
+		Procedimentos * procedimentos_do_prog;
 		Variaveis variaveis_globais;
 		std::stack<Variaveis> pilha_chamada;
 
@@ -38,7 +39,7 @@ class Contexto
 		void removeRA();
 		
 		Procedimento * obtemProcedimento(std::string nome_procedimento);
-		void defineProcedimentos(ListaProcedimentos * procedimentos_do_prog);
+		void defineProcedimentos(Procedimentos * procedimentos_do_prog);
 };
 
 } /* namespace tiny */

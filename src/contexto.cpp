@@ -137,12 +137,19 @@ void Contexto::removeRA()
 /* ========================================================================== */
 
 Procedimento * Contexto::obtemProcedimento(std::string nome_procedimento) {
-		return this->obtemProcedimento(nome_procedimento);
+		
+	std::map<std::string, Procedimento *>::iterator it;
+
+	it = this->procedimentos_do_prog->find(nome_procedimento);
+	if (it != this->procedimentos_do_prog->end()) 
+		return it->second;
+	else
+		throw Erro("\nNão foi possível encontrar procedimento"+nome_procedimento);
 }
 
 /* ========================================================================== */
 
-void defineProcedimentos(ListaProcedimentos * procedimentos_do_prog) {
+void defineProcedimentos(Procedimentos * procedimentos_do_prog) {
 	this->procedimentos_do_prog = procedimentos_do_prog;
 }
 
