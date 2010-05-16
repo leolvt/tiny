@@ -1,32 +1,19 @@
 #ifndef		TINY_CONTEXTO_H
 #define		TINY_CONTEXTO_H
 
-#include <map>
-#include <stack>
 #include <string>
-#include "procedimento.h"
+#include "defs.h"
 
 namespace tiny {
 
-class Erro
-{
-	private:
-		std::string msg;
-
-	public:
-		Erro(std::string msg);
-		std::string obtemMsg();
-};
-
-typedef std::map<char,double> Variaveis;
-typedef std::map<std::string, Procedimento *> Procedimentos;
+class Procedimento;
 
 class Contexto 
 {
 	private:
 		Procedimentos * procedimentos_do_prog;
 		Variaveis variaveis_globais;
-		std::stack<Variaveis> pilha_chamada;
+		Pilha pilha_chamada;
 
 	public:
 		Contexto();

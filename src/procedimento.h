@@ -3,27 +3,27 @@
 
 #include <string>
 #include "lista_variaveis.h"
-#include "comando_local.h"
 #include "lista_comandos.h"
+#include "comando.h"
 
 namespace tiny {
 
 class Procedimento {
 	private:
-		std::string nome_processo;
+		std::string * nome_processo;
 		ListaVariaveis * parametros;
-		ComandoLocal * cmd_local;
+		Comando * cmd_local;
 		ListaComandos * lista_cmds;
 	
 	public:
-		Procedimento(	std::string nome_processo, 
+		Procedimento(	std::string * nome_processo, 
 				ListaVariaveis * parametros, 
-				ComandoLocal * cmd_local, 
+				Comando * cmd_local, 
 				ListaComandos * lista_cmds);
 		~Procedimento();
 		std::string obtemNome();
 		ListaVariaveis * obtemParametros();
-		ComandoLocal * obtemLocal();
+		Comando * obtemLocal();
 		ListaComandos * obtemComandos();
 };
 

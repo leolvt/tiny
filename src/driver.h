@@ -2,7 +2,7 @@
 #define TINY_DRIVER_H
 
 #include <string>
-#include "lista_comandos.h"
+#include "programa.h"
 
 /** The tiny namespace is used to encapsulate the three parser classes
  * tiny::Parser, tiny::Scanner and tiny::Driver */
@@ -33,7 +33,7 @@ public:
     std::string streamname;
 
 	// Store the parsing result
-	ListaComandos * programa;
+	Programa * programa;
 
     /** Invoke the scanner and parser for a stream.
      * @param in	input stream

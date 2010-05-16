@@ -12,8 +12,11 @@ class ListaExpressoes
 		std::vector<Expressao *> lista_de_expressoes;
 
 	public:
+		ListaExpressoes();
 		ListaExpressoes(Expressao * E);
 		~ListaExpressoes();
+
+		int tamanho();
 		void AdicionaExpressao(Expressao * E);
 		std::vector<double> Avalia(Contexto& C);
 };

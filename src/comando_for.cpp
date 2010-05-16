@@ -1,4 +1,3 @@
-#include <iostream>
 #include "comando_for.h"
 
 namespace tiny {

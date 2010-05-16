@@ -11,8 +11,8 @@
 #include "comando_for.h"
 #include "comando_call.h"
 #include "comando_global.h"
-#include "comando_local.h"
 #include "comando_if.h"
+#include "comando_local.h"
 #include "comando_read.h"
 #include "comando_write.h"
 #include "comando_while.h"
@@ -23,11 +23,10 @@
 #include "exp_relacional.h"
 #include "fator.h"
 #include "lista_comandos.h"
-#include "lista_procedimentos.h"
 #include "lista_expressoes.h"
+#include "lista_procedimentos.h"
 #include "lista_variaveis.h"
-
-//class std::vector<char>;
+#include "programa.h"
 
 %}
 
@@ -71,18 +70,19 @@
  /*** BEGIN TOKENS ***/
 
 %union {
-    char						charVal;
-    double						doubleVal;
-    bool						boolVal;
-	std::string				*	strVal;
-	class Comando			*	cmdVal;
-	class Expressao			*	expVal;
-	class ExpressaoBool		*	expBool;
-	class ListaComandos		*	listaCmdVal;
+    char							charVal;
+    double							doubleVal;
+    bool							boolVal;
+	std::string					*	strVal;
+	class Comando				*	cmdVal;
+	class Expressao				*	expVal;
+	class ExpressaoBool			*	expBool;
+	class ListaComandos			*	listaCmdVal;
 	class ListaProcedimentos	*	listaProcVal;
-	class ListaExpressoes	*	listaExpVal;
-	class ListaVariaveis	*	listaVar;
-	class Procedimento	*	proced;
+	class ListaExpressoes		*	listaExpVal;
+	class ListaVariaveis		*	listaVar;
+	class Procedimento			*	proced;
+	class Programa				*	prog;
 }
 
 %token					FIM		0	"end of file"
@@ -122,9 +122,11 @@
 %token	<strVal>		STRING		"string"
 %token	<charVal>		VARNAME		"variable name"
 
+%type	<prog>			programa
 %type	<listaCmdVal>	lista_comandos
 %type	<listaProcVal>	lista_procedimentos
 %type	<listaExpVal>	lista_expressoes
+%type	<listaVar>		lista_param_formais
 %type	<listaExpVal>	lista_param_reais
 %type 	<listaVar>		lista_variaveis
 %type	<proced>		procedimento
@@ -146,7 +148,7 @@
 %type	<expBool>		boolean
 
 /* start symbol is named "start" */
-%start program
+%start start
 
  /*** END TOKENS ***/
 
@@ -165,14 +167,18 @@
 
 %% /*** Grammar Rules ***/
 
-program: lista_procedimentos ENDP 		{ driver.programa = $1; }
+start: programa	{driver.programa = $1;}
+
+programa: comando_global ';' lista_procedimentos ENDP 		
+		{ $$ = new Programa($1,$3); }
 ;
 
-lista_procedimentos:	comando_global procedimento	{ $$ = new ListaProcedimentos($1, $2); }
-			| lista_procedimentos procedimento	{ $$ = $1; $1->AdicionaProcedimento($2); }
+lista_procedimentos: procedimento	{ $$ = new ListaProcedimentos($1); }
+		           | lista_procedimentos procedimento	
+							{ $$ = $1; $1->AdicionaProcedimento($2); }
 ;
 
-procedimento:	PROC ID '(' lista_variaveis ')' comando_local	lista_comandos	ENDPROC
+procedimento:	PROC ID '(' lista_param_formais ')' comando_local lista_comandos	ENDPROC
 						{ $$ = new Procedimento($2, $4, $6, $7); }
 ;
 
@@ -191,6 +197,9 @@ lista_variaveis: VARNAME			{ $$ = new ListaVariaveis($1); }
 									{ $$ = $1; $1->adicionaVar($3); }
 ;
 
+lista_param_formais: /* empty */	{ $$ = new ListaVariaveis(); }
+				   | lista_variaveis { $$ = $1;}
+
 lista_param_reais: /* empty */		{ $$ = NULL; }
 				 | lista_expressoes { $$ = $1; }
 ;
@@ -203,7 +212,6 @@ comando: WRITESTR '(' STRING ')'	{ $$ = new ComandoWrite(writeStr, $3); }
 	   | comando_for				{ $$ = $1; }
 	   | comando_if					{ $$ = $1; }
 	   | comando_while				{ $$ = $1; }
-	   | comando_global				{ $$ = $1; }
 	   | comando_call				{ $$ = $1; }
 ;
 
@@ -212,7 +220,7 @@ comando_call: CALL ID '(' lista_param_reais ')'
 ;
 
 comando_local: /* empty */				{ $$ = new ComandoLocal(); }
-			  | LOCAL lista_variaveis	{ $$ = new ComandoLocal($2); }
+			  | LOCAL lista_variaveis ';'	{ $$ = new ComandoLocal($2); }
 ;
 
 comando_global: /* empty */				{ $$ = new ComandoGlobal(); }

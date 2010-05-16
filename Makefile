@@ -14,7 +14,7 @@ BFLAGS = --defines="src/parser.h"
 OBJDIR = bin/obj
 BINNAME = bin/tiny
 
-PARAM = 
+PARAM = bin/testes/tp2.tiny 
 
 OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
 	   ${OBJDIR}/driver.o ${OBJDIR}/contexto.o \
@@ -26,7 +26,8 @@ OBJS = ${OBJDIR}/main.o ${OBJDIR}/scanner.o ${OBJDIR}/parser.o \
 	   ${OBJDIR}/comando_if.o ${OBJDIR}/comando_while.o \
 	   ${OBJDIR}/lista_expressoes.o ${OBJDIR}/lista_variaveis.o \
 	   ${OBJDIR}/comando_global.o ${OBJDIR}/comando_call.o \
-	   ${OBJDIR}/comando_local.o ${OBJDIR}/lista_procedimentos.o
+	   ${OBJDIR}/comando_local.o ${OBJDIR}/lista_procedimentos.o \
+	   ${OBJDIR}/programa.o ${OBJDIR}/defs.o ${OBJDIR}/procedimento.o
 
 ARCHIVE_FILES = src/ doc/ bin/ Makefile README
 ARCHIVE_NAME = tiny.tar.gz
@@ -77,6 +78,14 @@ ${OBJDIR}/main.o: src/main.cpp
 	@echo "Compilando Modulo Principal"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
+${OBJDIR}/defs.o: src/defs.cpp src/defs.h
+	@echo "Compilando Modulo Definições"
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+
+${OBJDIR}/programa.o: src/programa.cpp src/programa.h
+	@echo "Compilando Modulo Programa"
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+
 ${OBJDIR}/contexto.o: src/contexto.cpp src/contexto.h
 	@echo "Compilando Modulo Contexto"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
@@ -97,6 +106,10 @@ ${OBJDIR}/lista_procedimentos.o: src/lista_procedimentos.cpp src/lista_procedime
 	@echo "Compilando Modulo Lista de Procedimentos"
 	@${CXX} ${CXXFLAGS} -c $< -o $@
 
+${OBJDIR}/procedimento.o: src/procedimento.cpp src/procedimento.h
+	@echo "Compilando Modulo Procedimento" 
+	@${CXX} ${CXXFLAGS} -c $< -o $@
+	
 ${OBJDIR}/comando_global.o: src/comando_global.cpp src/comando_global.h
 	@echo "Compilando Modulo Comando Global"
 	@${CXX} ${CXXFLAGS} -c $< -o $@

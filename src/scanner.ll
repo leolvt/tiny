@@ -115,7 +115,7 @@ E	[Ee][+-]?{D}+
 }
 
  /* Identifiers */
-L(L|D)+	{
+{L}({L}|{D}|"_")+	{
 	yylval->strVal = new std::string(yytext);
 	return token::ID;
 }

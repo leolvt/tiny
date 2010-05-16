@@ -1,25 +1,10 @@
 #include <map>
 #include <cctype>
-#include <iostream>
 
 #include "contexto.h"
 #include "lista_procedimentos.h"
 
 namespace tiny {
-
-/* ========================================================================== */
-	
-Erro::Erro(std::string msg)
-{
-	this->msg = msg;
-}
-
-/* ========================================================================== */
-
-std::string Erro::obtemMsg()
-{
-	return this->msg;
-}
 
 /* ========================================================================== */
 
@@ -142,14 +127,18 @@ Procedimento * Contexto::obtemProcedimento(std::string nome_procedimento) {
 
 	it = this->procedimentos_do_prog->find(nome_procedimento);
 	if (it != this->procedimentos_do_prog->end()) 
+	{
 		return it->second;
+	}
 	else
-		throw Erro("\nNão foi possível encontrar procedimento"+nome_procedimento);
+	{
+		throw Erro("\nNão foi possível encontrar procedimento "+nome_procedimento);
+	}
 }
 
 /* ========================================================================== */
 
-void defineProcedimentos(Procedimentos * procedimentos_do_prog) {
+void Contexto::defineProcedimentos(Procedimentos * procedimentos_do_prog) {
 	this->procedimentos_do_prog = procedimentos_do_prog;
 }
 

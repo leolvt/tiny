@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
 {
     Contexto Ctx;
     Driver driver;
-    bool readfile = false;
 
     for(int ai = 1; ai < argc; ++ai)
     {
@@ -49,7 +48,16 @@ int main(int argc, char *argv[])
             bool result = driver.parse_stream(infile, argv[ai]);
             if (result)
             {
-                if (driver.programa) driver.programa->Interpreta(Ctx);
+                if (driver.programa) 
+				{
+					try {
+						driver.programa->Executa(Ctx);
+					} catch (Erro e)
+					{
+						std::cerr << e.obtemMsg() << std::endl;
+						return 1;
+					}
+				}
                 else 
 				{
 					std::cerr << "Erro ao processar o código" << std::endl;
@@ -57,33 +65,10 @@ int main(int argc, char *argv[])
 				}
             }
 
-            readfile = true;
         }
     }
 
-    if (readfile) return 0;
-   
-    std::cout << "Lendo programa da entrada padrão: " << std::endl;
-
-    std::string line;
-    while( std::cout << "entrada: " &&
-           std::getline(std::cin, line) &&
-           !line.empty() )
-    {
-        bool result = driver.parse_string(line, "entrada");
-
-        if (result)
-        {
-            if (driver.programa) 
-			{
-				driver.programa->Interpreta(Ctx);
-				delete driver.programa;
-				driver.programa = NULL;
-			}
-            else std::cerr << "Erro ao processar o código" << std::endl;
-			std::cout << std::endl;
-        }
-    }
+    return 0;
 }
 
 #endif

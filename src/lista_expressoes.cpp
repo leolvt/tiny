@@ -5,6 +5,12 @@ namespace tiny {
 
 /* ========================================================================== */
 
+ListaExpressoes::ListaExpressoes()
+{
+}
+
+/* ========================================================================== */
+
 ListaExpressoes::ListaExpressoes(Expressao * E)
 {
 	if (E != NULL)
@@ -19,6 +25,13 @@ ListaExpressoes::~ListaExpressoes()
     for( i = 0 ; i < lista_de_expressoes.size() ; i++)
         delete lista_de_expressoes[i];
     lista_de_expressoes.clear();
+}
+
+/* ========================================================================== */
+
+int ListaExpressoes::tamanho()
+{
+	return this->lista_de_expressoes.size();
 }
 
 /* ========================================================================== */
@@ -38,7 +51,11 @@ std::vector<double> ListaExpressoes::Avalia(Contexto& C)
 
 	unsigned int i;
 	for (i = 0 ; i < lista_de_expressoes.size() ; i++ )
-		resultado[i] = lista_de_expressoes[i]->Calcula(C);
+	{
+		Expressao * E = lista_de_expressoes[i];
+		double res = E->Calcula(C);
+		resultado[i] = res; 
+	}
 
 	return resultado;
 }

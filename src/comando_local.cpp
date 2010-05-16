@@ -22,10 +22,13 @@ ComandoLocal::~ComandoLocal(){
 
 /* ========================================================================== */
 
-ComandoLocal::Interpreta(Contexto& C) {
-	int i;
-	for ( i = 0 ; i < lista->tamanho() ; i++ )
-		C.adicionaVariavel( (*lista)[i] , 0.0);
+void ComandoLocal::Interpreta(Contexto& C) {
+	if (lista != NULL)
+	{
+		int i;
+		for ( i = 0 ; i < lista->tamanho() ; i++ )
+			C.adicionaVariavel( (*lista)[i] , 0.0);
+	}
 }
 
 /* ========================================================================== */

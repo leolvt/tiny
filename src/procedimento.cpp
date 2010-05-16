@@ -4,9 +4,9 @@ namespace tiny {
 
 /* ========================================================================== */
 
-Procedimento::Procedimento(	std::string nome_processo, 
+Procedimento::Procedimento(	std::string * nome_processo, 
 				ListaVariaveis * parametros, 
-				ComandoLocal * cmd_local, 
+				Comando * cmd_local, 
 				ListaComandos * lista_cmds){
 	
 	this->nome_processo = nome_processo;
@@ -29,25 +29,25 @@ Procedimento::~Procedimento() {
 
 /* ========================================================================== */
 
-std::string obtemNome() {
-	return this->nome;
+std::string Procedimento::obtemNome() {
+	return *(this->nome_processo);
 }
 
 /* ========================================================================== */
 
-ListaVariaveis * obtemParametros() {
+ListaVariaveis * Procedimento::obtemParametros() {
 	return this->parametros;
 }
 
 /* ========================================================================== */
 
-ComandoLocal * obtemLocal() {
+Comando * Procedimento::obtemLocal() {
 	return this->cmd_local;
 }
 
 /* ========================================================================== */
 
-ListaComandos * obtemComandos() {
+ListaComandos * Procedimento::obtemComandos() {
 	return this->lista_cmds;
 }
 
