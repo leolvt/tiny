@@ -4,6 +4,7 @@
 #include <map>
 #include <stack>
 #include <string>
+#include "procedimento.h"
 
 namespace tiny {
 
@@ -22,6 +23,7 @@ typedef std::map<char,double> Variaveis;
 class Contexto 
 {
 	private:
+		ListaProcedimentos * procedimentos_do_prog;
 		Variaveis variaveis_globais;
 		std::stack<Variaveis> pilha_chamada;
 
@@ -34,6 +36,9 @@ class Contexto
 		void adicionaVariavel(char nomeVar, double valor);
 		void adicionaRA();
 		void removeRA();
+		
+		Procedimento * obtemProcedimento(std::string nome_procedimento);
+		void defineProcedimentos(ListaProcedimentos * procedimentos_do_prog);
 };
 
 } /* namespace tiny */

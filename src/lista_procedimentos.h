@@ -3,7 +3,8 @@
 
 #include <vector>
 #include "contexto.h"
-#include "Procedimento.h"
+#include "procedimento.h"
+#include "comando_global.h"
 
 namespace tiny {
 
@@ -12,13 +13,15 @@ typedef std::map<std::string, Procedimento *> Procedimentos;
 class ListaProcedimentos {
 	
 	private:
-		Procedimentos procedimentos_do_prog;
+		ComandoGlobal * global;
+		Procedimentos * procedimentos_do_prog;
 	
 	public:
-		ListaProcedimentos(Procedimento * P);
+		ListaProcedimentos(ComandoGlobal * global, Procedimento * P);
 		~ListaProcedimentos();
 		void AdicionaProcedimento(Procedimento * P);
-		void obtemProcedimento(std::string nome_procedimento);
+		Procedimento * obtemProcedimento(std::string nome_procedimento);
+		void Interpreta(Contexto& C);
 		
 };
 

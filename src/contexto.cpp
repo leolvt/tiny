@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "contexto.h"
+#include "lista_procedimentos.h"
 
 namespace tiny {
 
@@ -131,6 +132,18 @@ void Contexto::adicionaRA()
 void Contexto::removeRA()
 {
 	pilha_chamada.pop();
+}
+
+/* ========================================================================== */
+
+Procedimento * Contexto::obtemProcedimento(std::string nome_procedimento) {
+		return this->obtemProcedimento(nome_procedimento);
+}
+
+/* ========================================================================== */
+
+void defineProcedimentos(ListaProcedimentos * procedimentos_do_prog) {
+	this->procedimentos_do_prog = procedimentos_do_prog;
 }
 
 /* ========================================================================== */

@@ -165,10 +165,10 @@
 
 %% /*** Grammar Rules ***/
 
-program:  lista_comandos ENDP 		{ driver.programa = $1; }
+program: lista_procedimentos ENDP 		{ driver.programa = $1; }
 ;
 
-lista_procedimentos:	procedimento	{ $$ = new ListaProcedimentos($1); }
+lista_procedimentos:	comando_global procedimento	{ $$ = new ListaProcedimentos($1, $2); }
 			| lista_procedimentos procedimento	{ $$ = $1; $1->AdicionaProcedimento($2); }
 ;
 
