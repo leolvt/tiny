@@ -6,10 +6,12 @@
 #include <vector>
 #include "boolean.h"
 #include "comando.h"
+#include "procedimento.h"
 #include "comando_atribuicao.h"
 #include "comando_for.h"
 #include "comando_call.h"
 #include "comando_global.h"
+#include "comando_local.h"
 #include "comando_if.h"
 #include "comando_read.h"
 #include "comando_write.h"
@@ -21,6 +23,7 @@
 #include "exp_relacional.h"
 #include "fator.h"
 #include "lista_comandos.h"
+#include "lista_procedimentos.h"
 #include "lista_expressoes.h"
 #include "lista_variaveis.h"
 
@@ -76,6 +79,7 @@
 	class Expressao			*	expVal;
 	class ExpressaoBool		*	expBool;
 	class ListaComandos		*	listaCmdVal;
+	class ListaProcedimentos	*	listaProcVal;
 	class ListaExpressoes	*	listaExpVal;
 	class ListaVariaveis	*	listaVar;
 	class Procedimento	*	proced;
@@ -119,6 +123,7 @@
 %token	<charVal>		VARNAME		"variable name"
 
 %type	<listaCmdVal>	lista_comandos
+%type	<listaProcVal>	lista_procedimentos
 %type	<listaExpVal>	lista_expressoes
 %type	<listaExpVal>	lista_param_reais
 %type 	<listaVar>		lista_variaveis
@@ -161,6 +166,10 @@
 %% /*** Grammar Rules ***/
 
 program:  lista_comandos ENDP 		{ driver.programa = $1; }
+;
+
+lista_procedimentos:	procedimento	{ $$ = new ListaProcedimentos($1); }
+			| lista_procedimentos procedimento	{ $$ = $1; $1->AdicionaProcedimento($2); }
 ;
 
 procedimento:	PROC ID '(' lista_variaveis ')' comando_local	lista_comandos	ENDPROC

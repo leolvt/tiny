@@ -1,7 +1,7 @@
 <programa> ::= <cmd_global> <lista_procedimentos> "endp"
 
-<lista_procedimentos> ::= <lista_procedimentos> <procedimento>
-<lista_procedimentos> ::= <procedimento>
+# <lista_procedimentos> ::= <lista_procedimentos> <procedimento>
+# <lista_procedimentos> ::= <procedimento>
 
 # <procedimento> ::=  "proc" <nome> "(" <lista_variaveis> ")" 
 					<cmd_local>
