@@ -12,7 +12,7 @@
 
 \sloppy
 
-\title{Linguagem Tiny - Implementação por meio de orientação por objetos}
+\title{Linguagem Tiny - Implementação por meio de orientação por objetos \\ Chamada de procedimentos}
 
 \author{Felipe Buzatti Nascimento \and Leonardo Vilela Teixeira}
 
@@ -25,116 +25,105 @@
 \maketitle
 
 \begin{resumo} 
-Este trabalho produz um interpretador para a linguagem Tiny. Para construir o interpretador foi utilizada uma estrutura de classes seguindo o padrão de projetos interpretador definido em \cite{GoF}.
+Este trabalho expande o interpretador para linguagem tiny, adicionando uma estrutura de procedimentos. Para construir o interpretador foi utilizada uma estrutura de classes seguindo o padrão de projetos interpretador definido em \cite{GoF}.
 \end{resumo}
 
 
 \section{Estrutura de classes}
 
-A estrutura básica de classes consiste em três superclasses virtuais puras, a classe Comando, Expressao e ExpressaoBool, que declaram as três funções utilizadas no processo: Interpreta, Calcula e Avalia.
+As novas classes, usadas para implementar a estrutura de procedimentos são: comandoCall, comandoGlobal, comandoLocal, listaProcedimentos, listaVariaveis, Procedimento e Programa.
+Foi ainda criada uma classe Erro, relacionada ao tratamento de exceções.
 
-\subsection{classe Comando:} 
+\subsection{classe Programa:} 
 
-A classe comando define a função Interpreta e é herdada pelas classes ComandoAtribuicao, ComandoFor, ComandoIf, ComandoRead, ComandoWhile, ComandoWrite.
+Um programa agora é visto como um comando global (facultativo) e uma lista de procedimentos. A classe programa encapsula essa visão.
 \begin{algorithm}[h!]
 \begin{footnotesize}
 
-	public: 
-		virtual ~Comando() {}\;
-		virtual void Interpreta( Contexto\& C ) = 0\;
+	private:\\
+		Comando * cmd\_global\;
+		ListaProcedimentos * procedimentos\;
+	public: \\
+		Programa(Comando * g, ListaProcedimentos * p)\;
+		~Programa()\;
+		void Executa(Contexto\& C)\;
 
-\caption{class Comando}%
+\caption{class Programa}%
 \end{footnotesize}
 \end{algorithm}
 
-\subsection{classe Expressao:} 
+\subsection{classe Procedimento:} 
 
-Classe relacionada a expressões aritméticas, define a função Calcula. É herdada pelas classes ExpressaoAritmetica e Fator
+Procedimentos são formados por um identificador (nome do processo), parametros (facultativos), ComandoLocal (facultativo) e uma lista de comandos.
 \begin{algorithm}[h!]
 \begin{footnotesize}
   
-	public: 
-		virtual ~Expressao() {}\;
-		virtual double Calcula(Contexto\& C) = 0\;
+	private:\\
+		std::string * nome\_processo\;
+		ListaVariaveis * parametros\;
+		Comando * cmd\_local\;
+		ListaComandos * lista\_cmds\;
+	public:\\
+		Procedimento(	std::string * nome\_processo, 
+				ListaVariaveis * parametros, 
+				Comando * cmd\_local, 
+				ListaComandos * lista\_cmds)\;
+		~Procedimento()\;
+		std::string obtemNome()\;
+		ListaVariaveis * obtemParametros()\;
+		Comando * obtemLocal()\;
+		ListaComandos * obtemComandos()\;
 	
-\caption{class Expressao}%
-\end{footnotesize}
-\end{algorithm}
-
-\subsection{classe ExpressaoBool:} 
-
-Classe relacionada a expressões booleanas, define a função Avalia. É herdada pelas classes ExpressaoBooleana e ExpressaoRelacional.
-\begin{algorithm}[h!]
-\begin{footnotesize}
-  
-	public:
-		virtual ~ExpressaoBool() {}\;
-		virtual bool Avalia (Contexto\& C) = 0\;
-	
-\caption{class ExpressaoBool}%
+\caption{class Procedimento}%
 \end{footnotesize}
 \end{algorithm}
 
 \subsection{classe Contexto:} 
 
-Classe responsável pela estrutura que armazena e fornece acesso às variáveis.
+A classe contexto guarda o estado do programa, bem como sua estrutura. Ela contém os procedimentos do programa (procedimentos\_do\_prog), as variáveis globais (variaveis\_globais) e variáveis locais, armazenadas na pilha de ativação (pilha\_chamada).
 \begin{algorithm}[h!]
 \begin{footnotesize}
   
-	private:
-		std::vector$<$double$>$ variaveis\;
-
-	public:
+	private:\\
+		Procedimentos * procedimentos\_do\_prog\;
+		Variaveis variaveis\_globais\;
+		Pilha pilha\_chamada\;
+	public:\\
 		Contexto()\;
 		~Contexto()\;
 		
-		double	obtemVariavel(char nomeVar)\;
-		void	defineVariavel(char nomeVar, double valor)\;
+		double obtemVariavel(char nomeVar)\;
+		void defineVariavel(char nomeVar, double valor)\;
+		void adicionaVariavel(char nomeVar, double valor)\;
+		void adicionaRA()\;
+		void removeRA()\;
+		Procedimento * obtemProcedimento(std::string nome\_procedimento)\;
+		void defineProcedimentos(Procedimentos * procedimentos\_do\_prog)\;
 	
 \caption{class Contexto}%
 \end{footnotesize}
 \end{algorithm}
 
-\subsection{classe ListaComandos:} 
-
-Classe responsável pela estrutura de lista de comandos, que armazena os comandos do programa.
-\begin{algorithm}[h!]
-\begin{footnotesize}
-  
-	private:
-		std::vector$<$Comando *$>$ lista\_de\_comandos\;
-
-	public:
-		ListaComandos(Comando * C)\;
-		~ListaComandos()\;
-		void AdicionaComando(Comando * C)\;
-		void Interpreta(Contexto\& C)\;
-	
-\caption{class ListaComandos}%
-\end{footnotesize}
-\end{algorithm}
-
 \section{Algoritmos}
 
-As três funções principais são Interpreta, Avalia e Calcula. Essas são definidas
-em cada classe de uma forma diferente, dependendo da classe. A aplicação dessas
-funções se dá através de atribuição polimórfica, com essas funções sendo
-chamadas para objetos declarados como Comando, ExpressaoBooleana ou Expressao.
-Como trata-se de funções virtuais, é chamada a função da classe à qual pertence
-o objeto apontado.
+Das novas funções, apresentaremos aqui as fundamentais: Programa::Executa, Contexto::AdicionaVariavel, Contexto::AdicionaRA e Contexto::RemoveRA.
 
-\subsection{virtual void Interpreta( Contexto\& C )}
+\subsection{void Programa::Executa( Contexto\& C )}
 
-Função típica de comandos. Executa o comando relativo à classe. Por exemplo, na classe ComandoWhile, essa função testa o condicional, e executa a lista de comandos recebida pela classe enquanto a condição for verdadeira. Já na classe ComandoAtribuicao a função recebe o nome da variável e o valor a ser atribuído e através das funções definidas pela classe Contexto modifica o valor da variável.
+Primeira função da interpretação. Adiciona ao contexto a Lista de procedimentos, para futuras chamadas pela função call. Interpreta o comandoGlobal e faz um call do processo main.
 
 
-\subsection{virtual double Calcula(Contexto\& C)}
+\subsection{void Contexto::AdicionaRA()}
 
-Função relativa a expressões aritméticas. Faz acesso a variáveis, soma, subtrai, multiplica, ou faz raiz quadrada, dependendo da operação definida pelo objeto. Retorna o resultado do cálculo como um double.
+Função que faz um "push" da pilha de ativação. Cada vez que um comando call é feito essa função é chamada para empilhar um novo espaço para as variáveis locais.
 
-\subsection{virtual bool Avalia (Contexto\& C)}
+\subsection{void Contexto::RemoveRA()}
 
-Função típica de classes que definem expressões booleanas e relacionais. Realiza comparações, AND's, OR's, etc. O resultado dessas operações é um booleano.
+Faz um "pop" da pilha de ativação. Executada ao final de cada chamada de procedimento, para remover o espaço de variáveis usado pelo processo anterior.
+
+\subsection{void Contexto::AdicionaVariavel(char nomevar, double valor)}
+
+Função chamada pelos comandos global e local, para criar, respectivamente, variáveis globais e locais. As variáveis globais são criadas porque a função é chamada com uma pilha de ativação vazia. Quando temos uma chamada de procedimento as variáveis criadas são colocadas na pilha referente a esse procedimento em execução, ouse ja, no topo da pilha.
 
 \section{IMPLEMENTAÇÃO}
 
@@ -159,9 +148,8 @@ O programa deve ser compilado pelo compilador GCC através de um makefile na pas
 
 \section{Execução}
 
-O programa pode receber por parâmetro o nome do arquivo-fonte cujo código deve 
-ser interpretado. Se não for informado um arquivo, o interpretador irá
-interpretar o código passado pela entrada padrão.
+O programa deve receber por parâmetro o nome do arquivo-fonte cujo código deve 
+ser interpretado.
 
 \subsection{Formato da entrada}
 
@@ -172,16 +160,19 @@ interpretado. Um exemplo de programa válido seria:
 \begin{algorithm}[h!]
 \begin{footnotesize}
 \begin{verbatim}
-read(a);
-read(b);
+proc main()
+  local a, b, c;
+  read(a);
+  read(b);
 
-while( a > 0 ) do
-    c := c + b;
-    a := a - 1;
-endw;
+  while( a > 0 ) do
+      c := c + b;
+      a := a - 1;
+  endw;
 
-writeVar(c);
-writeln;
+  writeVar(c);
+  writeln;
+endproc
 
 endp
 \end{verbatim}	

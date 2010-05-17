@@ -168,6 +168,7 @@
 %% /*** Grammar Rules ***/
 
 start: programa	{driver.programa = $1;}
+;
 
 programa: comando_global ';' lista_procedimentos ENDP 		
 		{ $$ = new Programa($1,$3); }
