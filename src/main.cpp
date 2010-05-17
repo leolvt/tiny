@@ -6,21 +6,7 @@
 #include "contexto.h"
 
 using namespace tiny;
-#if 0
-#include "lista_variaveis.h"
-int main()
-{
-	ListaVariaveis lv;
-	lv.adicionaVar('a');
-	lv.adicionaVar('b');
-	lv.adicionaVar('c');
 
-	std::cout << lv[0] << std::endl;
-	std::cout << lv[1] << std::endl;
-	std::cout << lv[3] << std::endl;
-}
-
-#else
 int main(int argc, char *argv[])
 {
     Contexto Ctx;
@@ -71,4 +57,3 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-#endif
